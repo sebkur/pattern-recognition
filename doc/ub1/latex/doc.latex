@@ -1,0 +1,140 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[a4paper,vmargin={20mm,20mm},hmargin={30mm,25mm}]{geometry}
+
+\usepackage{graphicx}
+\usepackage[utf8x]{inputenc}
+\usepackage{listings}
+
+\begin{document}
+
+\lstset{
+basicstyle=\footnotesize
+}
+
+\parindent 0em%
+\parskip 0.5em%
+\noindent\rule{\textwidth}{1pt}%
+\begin{center}%
+\textbf{Mustererkennung WiSe 11/12} \\
+\textbf{Übung 1}
+\end{center}%
+{Jonas Dohse, Sebastian Kürten}\\%
+\noindent\rule{\textwidth}{1pt}%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Aufgabe 1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Aufgabe 1}
+
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[height=11cm]{pics/screen.pdf}
+\caption{Vorschau}
+\label{a1.1}
+\end{center}
+\end{figure}
+
+\begin{itemize}
+\item Aufruf
+\begin{lstlisting}
+java -cp me.jar ub1.a1.TestDisplay pendigits-training.txt
+\end{lstlisting}
+\item Abbildung \ref{a1.1} zeigt die Ausgabe
+\item Die Klasse \texttt{ub1.a1.Reader} implementiert statische Methoden für das 
+Einlesen der Eingabedaten. Diese liefern eine \texttt{Collection} mit Elementen
+vom Typ \texttt{ub1.a1.PendigitRecord}.
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Aufgabe 2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Aufgabe 2}
+
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[height=11cm]{pics/pen.pdf}
+\caption{Erkennungsraten von Pendigits}
+\label{a2.1}
+\end{center}
+\end{figure}
+
+\begin{itemize}
+\item Aufruf
+\begin{lstlisting}
+java -cp me.jar ub1.a2.TestPendigitDetection 
+	pendigits-training.txt pendigits-testing.txt
+\end{lstlisting}
+\item Es wurde die abstrakte, generische Klasse \texttt{ub1.classificator.Classificator} implementiert.
+Um diese zu benutzen muss eine Erweiterung dieser Klasse geschrieben werden, die die Abstandsfunktion
+implementiert.
+\item Für diese Aufgabe wurde dies in \texttt{ub1.a2.PendigitClassificator} implementiert.
+\item Es ist zu erkennen, dass die Erkennungsrate insgesamt sehr gut ist (für viele k sogar über 97\%)
+\item Die Erkennungsrate ist schon für k=1 sehr hoch im Vergleich zum Rest, wird ein wenig schlechter für k=2
+und ist für k=3 am Besten. Dann sinkt sie für k=4 wieder auf das Niveau von k=2, steigt nochmal für k=5 leicht.
+Im weiteren wird die Erkennungsrate für größer werdende k immer schlechter.
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Aufgabe 3
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Aufgabe 3}
+
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[height=11cm]{pics/pic800.pdf}
+\caption{Trainingsdaten für n = 800}
+\label{verteilung}
+\end{center}
+\end{figure}
+
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[height=11cm]{pics/3d1.pdf}
+\caption{Erkennungsraten zweier Normalverteilungen}
+\label{ergebnis1}
+\end{center}
+\end{figure}
+
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[height=11cm]{pics/3d2.pdf}
+\caption{Erkennungsraten zweier Normalverteilungen}
+\label{ergebnis2}
+\end{center}
+\end{figure}
+
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[height=11cm]{pics/3d3.pdf}
+\caption{Erkennungsraten zweier Normalverteilungen}
+\label{ergebnis3}
+\end{center}
+\end{figure}
+
+\begin{itemize}
+\item Aufruf zur Generierung von \texttt{n} Testdatensätzen
+\begin{lstlisting}
+java -cp me.jar ub1.a3.Test <# zu generierende Exemplare>
+\end{lstlisting}
+\item Verteilung der Daten für \texttt{n = 800} sind in Abbildung \ref{verteilung} zu sehen
+\end{itemize}
+
+\begin{itemize}
+\item Aufruf zum Test vom KNN-Klassifikator mit \texttt{n} Trainingsdatensätzen
+\begin{lstlisting}
+java -cp me.jar ub1.a3.TestClassify <# zu benutzende Trainingsexemplare>
+\end{lstlisting}
+\item Die Erkennungsraten sind in Abbildungen \ref{ergebnis1}, \ref{ergebnis2} und \ref{ergebnis3}
+dargestellt. (variables \texttt{n}, \texttt{k} und feste Anzahl von Testdaten \texttt{m})
+\item $k = 1,2,...,40$; $n = 50, 60, 70, ... ,1990, 2000$; $m=1000$
+\item Die Erkennungsrate ist für große \texttt{n} sehr gut
+\item Die Erkennungsrate wird für größere \texttt{k} und kleinere \texttt{n} schlechter
+\item Bei k=1 wird schon bei n=50 eine Erkennungsrate von 99,9\% erreicht.
+\item Für k=40 wirde diese Erkennungsrate erst für n=570 erreicht.
+\item Wenn k sinnvoll gewählt wird, und n nicht zu klein ist, lassen sich also quasi optimale Ergbnisse erreichen.
+\end{itemize}
+
+\end{document}
