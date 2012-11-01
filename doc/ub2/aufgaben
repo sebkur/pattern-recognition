@@ -1,0 +1,8 @@
+Aufgabe 1
+Klassenmittelwerte berechnen und darstellen (auf den Trainingsdaten)
+
+Aufgabe 2
+ 1) Klassen modellieren mit multivariater Gaußverteilung
+ 2) Jedem sample der Testmenge die wahrscheinlichste Klasse zuweisen
+	- Erkennungsrate ermmitteln
+	- Confusion-Matrix
