@@ -16,13 +16,14 @@ for digit = 0:9
 	% compute covariance matrix
 	cov = zeros(16,16);
 	for sample = samples'
-		cov += (sample .- coordinates') * (sample .- coordinates')';
+		cov += (sample - coordinates') * (sample' - coordinates);
 	end
+	
 	% normalize
-	cov /= size(samples)(1);
+	cov = cov / size(samples)(1);
 	
 	% add some noise
-	cov .+= 0.01;
+	cov += 0.01;
 	
 	covariances{digit + 1} = {cov, coordinates};
 end
@@ -40,7 +41,6 @@ for sample = testingData'
 	for cluster = covariances
 		cov = cluster{1}{1};
 		meanVec = cluster{1}{2};
-		vec = meanVec;
 		likelyhood = 1 / (2 * pi * sqrt(det(cov))) * e^(-0.5 * (vec - meanVec) * cov^-1 * (vec - meanVec)');
 		if (likelyhood >= bestProb)
 			bestProb = likelyhood;
@@ -48,8 +48,6 @@ for sample = testingData'
 		end
 		counter += 1;
 	end
-	class
-	bestClass
 	confusionMatrix(bestClass, class + 1) += 1;
 end
 
