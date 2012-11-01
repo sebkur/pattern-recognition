@@ -15,126 +15,194 @@ basicstyle=\footnotesize
 \parskip 0.5em%
 \noindent\rule{\textwidth}{1pt}%
 \begin{center}%
-\textbf{Mustererkennung WiSe 11/12} \\
+\textbf{Mustererkennung WiSe 12/13} \\
 \textbf{Übung 1}
 \end{center}%
-{Jonas Dohse, Sebastian Kürten}\\%
+{Lutz Freitag, Sebastian Kürten}\\%
 \noindent\rule{\textwidth}{1pt}%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Aufgabe 1
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section*{Aufgabe 1}
+\section*{Aufgabe 1 - Visualisierung der Pendigts Eingabedaten}
 
 \begin{figure}[htp]
-\begin{center}
-\includegraphics[height=11cm]{pics/screen.pdf}
-\caption{Vorschau}
+\begin{center}$
+\begin{array}{cc}
+\includegraphics[height=3cm]{images/pen-1.pdf}
+\includegraphics[height=3cm]{images/pen-2.pdf}
+\includegraphics[height=3cm]{images/pen-3.pdf}
+\includegraphics[height=3cm]{images/pen-4.pdf}
+\includegraphics[height=3cm]{images/pen-5.pdf} \\
+\includegraphics[height=3cm]{images/pen-6.pdf}
+\includegraphics[height=3cm]{images/pen-7.pdf}
+\includegraphics[height=3cm]{images/pen-8.pdf}
+\includegraphics[height=3cm]{images/pen-9.pdf}
+\includegraphics[height=3cm]{images/pen-10.pdf}
+\end{array}$
+\caption{Darstellung der ersten 10 Trainingsdaten}
 \label{a1.1}
 \end{center}
 \end{figure}
 
 \begin{itemize}
-\item Aufruf
+\item Aufruf zum Plotten der ersten 10 Eingabedaten:
 \begin{lstlisting}
-java -cp me.jar ub1.a1.TestDisplay pendigits-training.txt
+./ub1.a1.b.sh
+\end{lstlisting}
+
+bzw.:
+
+\begin{lstlisting}
+java -cp bin:lib/* ub1.a1.TestDrawImages
+	data/pendigits-training.txt output/a1/pen 10
 \end{lstlisting}
 \item Abbildung \ref{a1.1} zeigt die Ausgabe
-\item Die Klasse \texttt{ub1.a1.Reader} implementiert statische Methoden für das 
+\item Die Klasse \texttt{pendigits.PendigitReader} implementiert statische Methoden für das 
 Einlesen der Eingabedaten. Diese liefern eine \texttt{Collection} mit Elementen
-vom Typ \texttt{ub1.a1.PendigitRecord}.
+vom Typ \texttt{pen\-digits.PendigitRecord}.
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Aufgabe 2
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section*{Aufgabe 2}
-
-\begin{figure}[htp]
-\begin{center}
-\includegraphics[height=11cm]{pics/pen.pdf}
-\caption{Erkennungsraten von Pendigits}
-\label{a2.1}
-\end{center}
-\end{figure}
+\section*{Aufgabe 2 - 1-Nearest-Neighbours}
 
 \begin{itemize}
-\item Aufruf
+\item Aufruf zum Klassifizieren aller Testdaten und zum Berechnen der Trefferquote:
 \begin{lstlisting}
-java -cp me.jar ub1.a2.TestPendigitDetection 
-	pendigits-training.txt pendigits-testing.txt
+./ub1.a2.sh
 \end{lstlisting}
-\item Es wurde die abstrakte, generische Klasse \texttt{ub1.classificator.Classificator} implementiert.
-Um diese zu benutzen muss eine Erweiterung dieser Klasse geschrieben werden, die die Abstandsfunktion
-implementiert.
-\item Für diese Aufgabe wurde dies in \texttt{ub1.a2.PendigitClassificator} implementiert.
-\item Es ist zu erkennen, dass die Erkennungsrate insgesamt sehr gut ist (für viele k sogar über 97\%)
-\item Die Erkennungsrate ist schon für k=1 sehr hoch im Vergleich zum Rest, wird ein wenig schlechter für k=2
-und ist für k=3 am Besten. Dann sinkt sie für k=4 wieder auf das Niveau von k=2, steigt nochmal für k=5 leicht.
-Im weiteren wird die Erkennungsrate für größer werdende k immer schlechter.
+
+bzw.:
+
+\begin{lstlisting}
+java -cp bin:lib/* ub1.a2.TestPendigitDetection 
+	data/pendigits-training.txt data/pendigits-testing.txt
+\end{lstlisting}
+\item Ausgabe:
+\begin{verbatim}
+#records training: 7494
+#records testing: 3498
+success rate: 97.74%
+failure rate: 2.26%
+\end{verbatim}
+\item Die abstrakte, generische Klasse \texttt{classificator.Classificator} implementiert Methoden 
+zur Klassifizierung von Eingabedaten. Diese wird vom \texttt{ub1.a2.Pendigit\-Clas\-sifi\-cator} erweitert
+und implementiert die Abstandsfunktion, die vom Klassifizierungsalgorithmus benötigt wird.
 \end{itemize}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Aufgabe 3
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Wichtigste Codestellen}
 
-\section*{Aufgabe 3}
+Main-Methode
 
-\begin{figure}[htp]
-\begin{center}
-\includegraphics[height=11cm]{pics/pic800.pdf}
-\caption{Trainingsdaten für n = 800}
-\label{verteilung}
-\end{center}
-\end{figure}
-
-\begin{figure}[htp]
-\begin{center}
-\includegraphics[height=11cm]{pics/3d1.pdf}
-\caption{Erkennungsraten zweier Normalverteilungen}
-\label{ergebnis1}
-\end{center}
-\end{figure}
-
-\begin{figure}[htp]
-\begin{center}
-\includegraphics[height=11cm]{pics/3d2.pdf}
-\caption{Erkennungsraten zweier Normalverteilungen}
-\label{ergebnis2}
-\end{center}
-\end{figure}
-
-\begin{figure}[htp]
-\begin{center}
-\includegraphics[height=11cm]{pics/3d3.pdf}
-\caption{Erkennungsraten zweier Normalverteilungen}
-\label{ergebnis3}
-\end{center}
-\end{figure}
-
-\begin{itemize}
-\item Aufruf zur Generierung von \texttt{n} Testdatensätzen
 \begin{lstlisting}
-java -cp me.jar ub1.a3.Test <# zu generierende Exemplare>
-\end{lstlisting}
-\item Verteilung der Daten für \texttt{n = 800} sind in Abbildung \ref{verteilung} zu sehen
-\end{itemize}
+public static void main(String[] args) throws IOException {
+	if (args.length != 2) {
+		System.out.println("TestPendigitDetection 
+			<training data> <testing data>");
+		System.exit(1);
+	}
 
-\begin{itemize}
-\item Aufruf zum Test vom KNN-Klassifikator mit \texttt{n} Trainingsdatensätzen
-\begin{lstlisting}
-java -cp me.jar ub1.a3.TestClassify <# zu benutzende Trainingsexemplare>
+	String filePathTraining = args[0];
+	String filePathTesting = args[1];
+
+	List<PendigitRecord> recordsTraining = PendigitReader
+			.readAtFilePath(filePathTraining);
+	List<PendigitRecord> recordsTesting = PendigitReader
+			.readAtFilePath(filePathTesting);
+
+	System.out.println(String.format("#records training: %d",
+			recordsTraining.size()));
+	System.out.println(String.format("#records testing: %d",
+			recordsTesting.size()));
+
+	PendigitClassificator classificator = new PendigitClassificator();
+
+	int successCount = 0;
+	int n = recordsTesting.size();
+	for (PendigitRecord record : recordsTesting) {
+		int trueClass = record.getClassNumber();
+		int guessedClass = classificator.classify(record, recordsTraining, 1);
+		boolean success = trueClass == guessedClass;
+		if (success) {
+			successCount += 1;
+		}
+	}
+	double successRate = successCount / (double) n;
+	double failureRate = 1 - successRate;
+	System.out.println(String.format("success rate: %.2f%%",
+			successRate * 100));
+	System.out.println(String.format("failure rate: %.2f%%",
+			failureRate * 100));
+}
 \end{lstlisting}
-\item Die Erkennungsraten sind in Abbildungen \ref{ergebnis1}, \ref{ergebnis2} und \ref{ergebnis3}
-dargestellt. (variables \texttt{n}, \texttt{k} und feste Anzahl von Testdaten \texttt{m})
-\item $k = 1,2,...,40$; $n = 50, 60, 70, ... ,1990, 2000$; $m=1000$
-\item Die Erkennungsrate ist für große \texttt{n} sehr gut
-\item Die Erkennungsrate wird für größere \texttt{k} und kleinere \texttt{n} schlechter
-\item Bei k=1 wird schon bei n=50 eine Erkennungsrate von 99,9\% erreicht.
-\item Für k=40 wirde diese Erkennungsrate erst für n=570 erreicht.
-\item Wenn k sinnvoll gewählt wird, und n nicht zu klein ist, lassen sich also quasi optimale Ergbnisse erreichen.
-\end{itemize}
+
+\newpage
+Methoden zur Bestimmung des nächsten Nachbarn
+
+\begin{lstlisting}
+public int classify(T record,
+		Collection<T> recordsTraining, int k)
+{
+	// first compute the distances to all training records.
+	List<WeightedRecord<T>> neighbors = calculateNeighborDistances(record,
+			recordsTraining);
+	// than classify according to the k nearest neighbors.
+	return classify(record, neighbors, k);
+}
+
+private List<WeightedRecord<T>> calculateNeighborDistances(
+		T record,
+		Collection<T> recordsTraining)
+{
+	// create the list to store records along with distances
+	List<WeightedRecord<T>> list = new ArrayList<WeightedRecord<T>>();
+	for (T other : recordsTraining) {
+		// compute distance
+		double dist = distance(record, other);
+		// and store the record with this distance
+		WeightedRecord<T> weightedRecord = new WeightedRecord<T>(other,
+				dist);
+		list.add(weightedRecord);
+	}
+	// sort the list with ascending distance
+	Collections.sort(list);
+	return list;
+}
+
+public int classify(T record,
+		List<WeightedRecord<T>> neighbors, int k)
+{
+	// create a list of candidates with duplicates
+	List<Integer> classCandidates = new ArrayList<Integer>();
+	// for the k nearest neighbors
+	for (int i = 0; i < k; i++) {
+		// find the i'th nearest neighbor
+		WeightedRecord<T> wr = neighbors.get(i);
+		// determine its class number
+		int classNumber = wr.getRecord().getClassNumber();
+		// and add it to the candidate list
+		classCandidates.add(classNumber);
+	}
+	// from the candidates, pick the one that occurs most often
+	int classNumber = pickClass(classCandidates);
+	return classNumber;
+}
+
+public double distance(PendigitRecord record, PendigitRecord other)
+{
+	double sum = 0;
+	for (int i = 0; i < record.getNumberOfCoordinates(); i++) {
+		Coordinate ca = record.getCoordinate(i);
+		Coordinate cb = other.getCoordinate(i);
+		sum += Math.pow(cb.getX() - ca.getX(), 2);
+		sum += Math.pow(cb.getY() - ca.getY(), 2);
+	}
+	return Math.sqrt(sum);
+}
+\end{lstlisting}
 
 \end{document}
