@@ -11,21 +11,23 @@ for digit = 0:9
 	% select all samples labeled with 'digit'
 	samples = trainingData(trainingData(:,17) == digit,:)(:,1:end - 1);
 	% compute average
-	coordinates = mean(samples);
+	mu = mean(samples);
 	
 	% compute covariance matrix
 	cov = zeros(16,16);
 	for sample = samples'
-		cov += (sample - coordinates') * (sample' - coordinates);
+		cov += (sample - mu') * (sample' - mu);
 	end
 	
 	% normalize
 	cov = cov / size(samples)(1);
 	
 	% add some noise
-	cov += 0.01;
+	if det(cov) == 0
+		cov += rand(size(cov)) / 1000;
+	end
 	
-	covariances{digit + 1} = {cov, coordinates};
+	covariances{digit + 1} = {cov, mu};
 end
 
 covariances;
