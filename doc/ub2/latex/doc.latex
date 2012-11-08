@@ -1,0 +1,204 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[a4paper,vmargin={20mm,20mm},hmargin={30mm,25mm}]{geometry}
+
+\usepackage{graphicx}
+\usepackage[utf8x]{inputenc}
+\usepackage{listings}
+
+\begin{document}
+
+\lstset{
+basicstyle=\footnotesize
+}
+
+\parindent 0em%
+\parskip 0.5em%
+\noindent\rule{\textwidth}{1pt}%
+\begin{center}%
+\textbf{Mustererkennung WiSe 12/13} \\
+\textbf{Übung 2}
+\end{center}%
+{Lutz Freitag, Sebastian Kürten}\\%
+\noindent\rule{\textwidth}{1pt}%
+
+\lstset {numbers = left, language = octave}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Aufgabe 1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Aufgabe 1 - Visualisierung der Klassenmittelwerte}
+
+\begin{figure}[htp]
+\begin{center}$
+\begin{array}{cc}
+\includegraphics[height=3cm]{images/digit-0.pdf}
+\includegraphics[height=3cm]{images/digit-1.pdf}
+\includegraphics[height=3cm]{images/digit-2.pdf}
+\includegraphics[height=3cm]{images/digit-3.pdf} \\
+\includegraphics[height=3cm]{images/digit-4.pdf} 
+\includegraphics[height=3cm]{images/digit-5.pdf} 
+\includegraphics[height=3cm]{images/digit-6.pdf}
+\includegraphics[height=3cm]{images/digit-7.pdf} \\
+\includegraphics[height=3cm]{images/digit-8.pdf}
+\includegraphics[height=3cm]{images/digit-9.pdf}
+\end{array}$
+\caption{Darstellung der Klassenmittelwerte}
+\label{a1.1}
+\end{center}
+\end{figure}
+
+Berechnung der Klassenzentren:
+
+\begin{lstlisting}
+% lade Daten
+trainingData = load("-ascii", "pendigits-training.txt");
+
+mkdir pics
+
+% loop over all digits
+for digit = 0:9
+	% select all samples labeled with 'digit'
+	samples = trainingData(trainingData(:,17) == digit,:);
+	% compute average
+	digitmean = mean(samples);
+	% plot digit
+	[coordinates, label] = separateSample(digitmean);
+	namePdf = sprintf ("pics/digit-%d.pdf", digit)
+	namePng = sprintf ("pics/digit-%d.png", digit)
+	plotDigit(coordinates, num2str(label), namePdf, namePng);
+end
+\end{lstlisting}
+
+plotDigit.m:
+
+\begin{lstlisting}
+function plotDigit(coordinates, label, namePdf, namePng)
+	handle = figure('visible', 'off');
+	[x, y] = splitVector(coordinates);
+	plot(x,y, '--rs', 'markersize', 5, 'linewidth', 2);
+	legend(label);
+	print(namePdf);
+	print(namePng);
+	close(handle);
+end;
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Aufgabe 2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Aufgabe 2 - Klassifikation}
+
+Die erste Spalte der Confusion-Matrix gibt hier die tatsächliche 
+Klasse an, die erste Zeile benennt die vom Algorithmus ausgewählt Klasse.
+
+\begin{verbatim}
+   NaN     0     1     2     3     4     5     6     7     8     9
+     0   341     0     0     0     0     0     0     0    22     0
+     1     0   350    12     0     1     0     0     0     1     0
+     2     0     8   355     0     0     0     0     1     0     0
+     3     0     9     0   320     0     1     0     1     0     5
+     4     0     0     0     0   362     0     0     0     0     2
+     5     0     0     0     1     0   323     0     0     2     9
+     6     0     0     0     0     0     0   325     0    11     0
+     7     0    28     0     0     0     0     0   314     5    17
+     8     0     0     0     0     0     0     0     0   336     0
+     9     0     5     0     0     0     0     0     1     1   329
+\end{verbatim}
+
+Es wurden 3355 von 3498 Samples richtig klassifiziert, d.h. die 
+Detection-Rate beträgt 95.9\%.
+
+\begin{verbatim}
+correct =  3355
+wrong =  143
+detectionRate =  0.95912
+failureRate =  0.040881
+\end{verbatim}
+
+Folgendes Programm wurde verwendet:
+
+\begin{lstlisting}
+% load data
+trainingData = load("-ascii", "pendigits-training.txt");
+testingData = load("-ascii", "pendigits-testing.txt");
+
+% number of dimensions
+n = 16;
+
+% determine multivariate gaussian distribution for each class
+covariances = {};
+
+for digit = 0:9
+	% select all samples labeled with 'digit'
+	samples = trainingData(trainingData(:,17) == digit,:)(:,1:end - 1);
+	% compute average
+	mu = mean(samples);
+	
+	% compute covariance matrix
+	cov = zeros(n, n);
+	for sample = samples'
+		cov += (sample - mu') * (sample' - mu);
+	end
+	
+	% normalize
+	cov = cov / size(samples)(1);
+	
+	% add some noise if necessary
+	if det(cov) == 0
+		cov += rand(size(cov)) / 1000;
+	end
+	
+	covariances{digit + 1} = {cov, mu};
+end
+
+covariances;
+
+% classify testing data
+
+confusionMatrix = zeros(10,10);
+correct = 0;
+wrong = 0;
+
+% iterate all samples in the testing dataset
+for sample = testingData'
+	[vec, class] = separateSample(sample');
+	% calculate maximum likely class
+	bestProb = 0; % best likelihood seen so far
+	bestClass = 0; % best corresponding class
+	counter = 0; % label of the current class within the loop
+	for cluster = covariances
+		% calculate likelihood
+		cov = cluster{1}{1};
+		mu = cluster{1}{2};
+		likelihood = 1 / ((2 * pi)^(n/2) * sqrt(det(cov))) * \
+			 e^(-0.5 * (vec - mu) * cov^-1 * (vec - mu)');
+		% check whether it is better than those before
+		if (likelihood > bestProb)
+			bestProb = likelihood;
+			bestClass = counter;
+		end
+		counter += 1;
+	end
+	% add an entry to the confusion matrix
+	confusionMatrix(class + 1, bestClass + 1) += 1;
+	% update correct / wrong counter
+	if bestClass == class
+		correct += 1;
+	else
+		wrong += 1;
+	end
+end
+
+% print the confusion matrix
+[NaN 0:9; [0:9]' confusionMatrix]
+
+% print correctnessRate / failureRate
+correct
+wrong
+detectionRate = correct / (correct + wrong)
+failureRate = wrong / (correct + wrong)
+\end{lstlisting}
+
+\end{document}
