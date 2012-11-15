@@ -14,26 +14,13 @@ for digit = 0:9
 	covariances{digit + 1} = cov;
 end
 
-digitA = 0;
-digitB = 1;
-[ncorrect, nwrong] = fisher(mus, covariances, testingData, digitA, digitB)
+% fisher für zwei klassen ausführen
+%[ncorrect, nwrong] = fisher(mus, covariances, testingData, 0, 1)
 
-results = zeros(10,10);
-
-%arrayfun(@(i,j) results(i,j) = 1, [1:3], [1:3])
-%arrayfun(@(i) results(i, i) = 1, [1:3])
-
-%results(1,1) = 1;
-%results
-
-
-% [probsA1, probsB1, classes1] = arrayfun(@(x) bayes(x, muA1, muB1, covA1, covB1), pA);
-
-%for digitA = 0:2
-%	for digitB = 0:2
-%		if (digitA != digitB)
-%			[digitA, digitB]
-%			[ncorrect, nwrong] = fisher(mus, covariances, testingData, digitA, digitB)
-%		end
-%	end
-%end
+% fisher für alle paare von zwei klassen ausführen
+split_long_rows(false);
+output_max_field_width(2);
+n = 9;
+[correct, wrong] = arrayfun(@(i,j) fisher(mus, covariances, testingData, i, j), \
+	repmat([0:n], n+1, 1), repmat([0:n], n+1, 1)')
+correct ./ (correct + wrong)
