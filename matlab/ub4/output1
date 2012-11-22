@@ -1,0 +1,8 @@
+Summe der Fehlerquadrate der Trainingsdaten:
+ans =  29.426
+Summe der Fehlerquadrate der Testdaten:
+ans =  15.638
+Durchschnittliches Fehlerquadrat der Trainingsdaten:
+ans =  0.43920
+Durchschnittliches Fehlerquadrat der Testdaten:
+ans =  0.52127

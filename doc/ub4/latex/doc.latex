@@ -35,6 +35,15 @@ basicstyle=\footnotesize
 
 Wir haben im Datensatz T durch 0 und F durch 1 ersetzt.
 
+\subsection{Ausgabe}
+
+\verbatiminput{../../../matlab/ub4/output1}
+
+\subsection{Code}
+
+\subsubsection{a1.m}
+\lstinputlisting{../../../matlab/ub4/a1.m}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Aufgabe 2
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
