@@ -1,0 +1,113 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[a4paper,vmargin={20mm,20mm},hmargin={30mm,25mm}]{geometry}
+
+\usepackage{graphicx}
+\usepackage[utf8x]{inputenc}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{verbatim}
+
+\begin{document}
+
+\lstset{
+basicstyle=\footnotesize
+}
+
+\parindent 0em%
+\parskip 0.5em%
+\noindent\rule{\textwidth}{1pt}%
+\begin{center}%
+\textbf{Mustererkennung WiSe 12/13} \\
+\textbf{Übung 4}
+\end{center}%
+{Lutz Freitag, Sebastian Kürten}\\%
+\noindent\rule{\textwidth}{1pt}%
+
+\definecolor{light-gray}{gray}{0.9}
+\lstset {numbers = left, language = octave}
+\lstset {basicstyle = \footnotesize, numberstyle = \small\color{gray}}
+\lstset {literate = {Ö}{{\"O}}1 {Ä}{{\"A}}1 {Ü}{{\"U}}1 {ß}{{\ss}}2 {ü}{{\"u}}1 {ä}{{\"a}}1 {ö}{{\"o}}1 }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Aufgabe 1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Aufgabe 1}
+
+Wir haben im Datensatz T durch 0 und F durch 1 ersetzt.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Aufgabe 2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Aufgabe 2}
+
+%\subsection{Ausgabe}
+%
+%\verbatiminput{../../../matlab/ub3/output}
+%
+%\subsection{Code}
+%
+%\subsubsection{a2.m}
+%\lstinputlisting{../../../matlab/ub3/a2.m}
+%\subsubsection{fisher.m}
+%\lstinputlisting{../../../matlab/ub3/fisher.m}
+%\subsubsection{bayes.m}
+%\lstinputlisting{../../../matlab/ub3/bayes.m}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Aufgabe 3
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\section*{Aufgabe 3}
+%
+%\subsection{Code}
+%\subsubsection{a3.m}
+%\lstinputlisting{../../../matlab/ub3/a3.m}
+%
+%\subsection{Ausgabe}
+%
+%% erste funktion
+%
+%\begin{figure}[htp]
+%\begin{center}
+%\includegraphics[width=11cm]{images/3a1.png}
+%\caption{Erste Funktion}
+%\end{center}
+%\end{figure}
+%
+%\begin{figure}[htp]
+%\begin{center}
+%\includegraphics[width=11cm]{images/3c1x.png}
+%\caption{Erste Funktion, abgeleitet nach x}
+%\end{center}
+%\end{figure}
+%
+%\begin{figure}[htp]
+%\begin{center}
+%\includegraphics[width=11cm]{images/3c1y.png}
+%\caption{Erste Funktion, abgeleitet nach y}
+%\end{center}
+%\end{figure}
+%
+%% zweite funktion
+%
+%\begin{figure}[htp]
+%\begin{center}
+%\includegraphics[width=11cm]{images/3a2.png}
+%\caption{Zweite Funktion}
+%\end{center}
+%\end{figure}
+%
+%\begin{figure}[htp]
+%\begin{center}
+%\includegraphics[width=11cm]{images/3c2x.png}
+%\caption{Zweite Funktion, abgeleitet nach x}
+%\end{center}
+%\end{figure}
+%
+%\begin{figure}[htp]
+%\begin{center}
+%\includegraphics[width=11cm]{images/3c2y.png}
+%\caption{Zweite Funktion, abgeleitet nach y}
+%\end{center}
+%\end{figure}
+
+\end{document}
