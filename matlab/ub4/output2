@@ -1,0 +1,8 @@
+k: 1, Fehler: 14.392, Parameterauswahl: 1
+k: 2, Fehler: 11.584, Parameterauswahl: [1,5]
+k: 3, Fehler: 11.484, Parameterauswahl: [1,5,7]
+k: 4, Fehler: 11.613, Parameterauswahl: [1,3,5,7]
+k: 5, Fehler: 11.498, Parameterauswahl: [1,2,3,5,7]
+k: 6, Fehler: 12.009, Parameterauswahl: [1,2,3,5,7,8]
+k: 7, Fehler: 13.493, Parameterauswahl: [1,2,3,4,5,6,7]
+k: 8, Fehler: 15.638, Parameterauswahl: [1,2,3,4,5,6,7,8]

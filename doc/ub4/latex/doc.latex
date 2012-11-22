@@ -49,6 +49,44 @@ Wir haben im Datensatz T durch 0 und F durch 1 ersetzt.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Aufgabe 2}
 
+Die Fehler beziehen sich hier auf die Abweichung der Vorhersage der Testdaten auf Basis
+der Trainingsdaten von den tatsächlichen Testdaten.
+
+Die Ausgabe zeigt je nach gegebener Anzahl der zu verwendenden Parameter $k$
+die jeweils beste gefundene Parameterauswahl mit dem zugehörigen summierten Fehler an.
+
+Die erste Abbildung zeigt für gegebenes $k$ alle ermittelten Fehlersummen, während
+die zweite Abbildung der Übersichtlichkeit halber nur den Fehler für die bestmögliche
+Parameterauswahl darstellt.
+
+\subsection{Ausgabe}
+
+\verbatiminput{../../../matlab/ub4/output2}
+
+\subsection{Code}
+
+\subsubsection{a2.m}
+\lstinputlisting{../../../matlab/ub4/a2.m}
+
+\subsubsection{calculateError.m}
+\lstinputlisting{../../../matlab/ub4/calculateError.m}
+
+\subsection{Plots}
+
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=16cm]{../../../matlab/ub4/results1.png}
+\caption{Alle Fehlerquadratsummen pro Anzahl der Parameter}
+\end{center}
+\end{figure}
+
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=16cm]{../../../matlab/ub4/results2.png}
+\caption{minimale Fehlerquadratsumme pro Anzahl der Parameter}
+\end{center}
+\end{figure}
+
 %\subsection{Ausgabe}
 %
 %\verbatiminput{../../../matlab/ub3/output}
