@@ -1,5 +1,5 @@
 % Daten laden
-data = load("data.mod");
+data = load('data.mod');
 % Testdaten von Trainingdaten trennen:
 % Bei Trainingsdaten steht in der letzten Spalte eine 0,
 % bei den Testdaten steht in der letzten Spalte eine 1.
@@ -34,13 +34,13 @@ errorTraining = deviationTraining .^2;
 errorTesting = deviationTesting .^2;
 
 % Summe der Fehlerquadrate
-printf("Summe der Fehlerquadrate der Trainingsdaten:\n");
+printf('Summe der Fehlerquadrate der Trainingsdaten:\n');
 sum(errorTraining)
-printf("Summe der Fehlerquadrate der Testdaten:\n");
+printf('Summe der Fehlerquadrate der Testdaten:\n');
 sum(errorTesting)
 
 % Durchschnittlicher Fehlerquadrate
-printf("Durchschnittliches Fehlerquadrat der Trainingsdaten:\n");
+printf('Durchschnittliches Fehlerquadrat der Trainingsdaten:\n');
 sum(errorTraining) / size(errorTraining, 1)
-printf("Durchschnittliches Fehlerquadrat der Testdaten:\n");
+printf('Durchschnittliches Fehlerquadrat der Testdaten:\n');
 sum(errorTesting) / size(errorTesting, 1)
