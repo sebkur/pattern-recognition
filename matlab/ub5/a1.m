@@ -4,8 +4,7 @@ data = load('data.mod');
 % Bei Trainingsdaten steht in der letzten Spalte eine 0,
 % bei den Testdaten steht in der letzten Spalte eine 1.
 % Außerdem weglassen der ersten Spalte, dort steht die Nummer
-training = data(data(:,11) == 0,2:end-1);
-testing  = data(data(:,11) == 1,2:end-1);
+training = data(data(:,11) == 0,2:end - 1);
 
 cnt = size(training)(1)
 
@@ -20,8 +19,7 @@ known = normalizedTraining(:,1:end-1); % lcavol, lweight, ..., pgg45
 
 y = normalizedTraining(:,end); % lpsa
 
-% Bestimme X durch Anfügen von 1-en vor die erste Spalte
-X = augmentWithOnes(known);
+X = known;
 
 hold on
 
@@ -29,11 +27,15 @@ hold on
 d = svd(X);
 
 
-for lambda = logspace(0.5,4.5,100) % chosen by looking
+for lambda = logspace(0,4.5,100) % chosen by looking
 	% Alpha bestimmen mit Formel für ridge Regression
 	alpha = (X' * X + lambda * eye(size(X' * X)))^(-1) * X' * y;
 	dl = sum(d .^2 ./ (d .^2 + lambda))
 	plot(repmat(dl, size(alpha)), alpha, "@")
 end
 hold off
+
+mkdir pics;
+print("pics/aufgabe1.png")
+
 pause
