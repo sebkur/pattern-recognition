@@ -36,15 +36,15 @@ basicstyle=\footnotesize
 
 \begin{figure}[htp]
 \begin{center}
-\includegraphics[width=16cm]{../../../matlab/ub5/pics/aufgabe1.png}
-\caption{Alle Fehlerquadratsummen pro Anzahl der Parameter}
+\includegraphics[width=8cm]{../../../matlab_/ub5/pics/aufgabe1.png}
+\caption{Freiheitsgrade gegen $d\lambda$}
 \end{center}
 \end{figure}
 
 \subsection{Code}
 
 \subsubsection{a1.m}
-\lstinputlisting{../../../matlab/ub5/a1.m}
+\lstinputlisting{../../../matlab_/ub5/a1.m}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Aufgabe 2
@@ -57,15 +57,15 @@ An jedem Index befinden sich drei Markierungen, die obere Grenze, Mittelwert der
 
 \begin{figure}[htp]
 \begin{center}
-\includegraphics[width=16cm]{../../../matlab/ub5/pics/aufgabe2.png}
-\caption{Alle Fehlerquadratsummen pro Anzahl der Parameter}
+\includegraphics[width=8cm]{../../../matlab_/ub5/pics/aufgabe2.png}
+\caption{Mittelwert der Vorhersage und Varianz}
 \end{center}
 \end{figure}
 
 \subsection{Code}
 
 \subsubsection{a2.m}
-\lstinputlisting{../../../matlab/ub5/a2.m}
+\lstinputlisting{../../../matlab_/ub5/a2.m}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -79,7 +79,7 @@ Der entstandene Vektor und der Basisvektor sind auf die maschinengenauigkeit gle
 \subsection{Code}
 
 \subsubsection{a2.m}
-\lstinputlisting{../../../matlab/ub5/a3.m}
+\lstinputlisting{../../../matlab_/ub5/a3.m}
 
 
 

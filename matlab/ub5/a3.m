@@ -1,3 +1,32 @@
+<<<<<<< HEAD
+% lade Daten
+trainingData = load("-ascii", "pendigits-training.txt");
+
+mkdir pics
+
+digit = 3
+% select all samples labeled with 'digit'
+samples = trainingData(trainingData(:,17) == digit,:)(:,1:end - 1);
+% compute average
+mu = mean(samples);
+
+% compute covariance matrix
+cov = zeros(16,16);
+for sample = samples'
+	cov += (sample - mu') * (sample' - mu);
+end
+	
+[u, d, t] = svd(cov);
+
+x = rand(16,1);
+
+for i = 1:100
+	x = cov * x;
+	x = 1/(sqrt(x'*x)) * x; % normalisieren
+end
+
+t(:,1) .- x
+=======
 % Daten laden
 trainingData = load("-ascii", "pendigits-training.txt");
 % wir arbeiten mit der Acht
@@ -26,3 +55,4 @@ for k = 0:14
 	% multiply xk with the covariance matrix
 	xk = normalize(cov * xk);
 end
+>>>>>>> 3cf852a9da54141e02777119287189b19300391e
