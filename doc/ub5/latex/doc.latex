@@ -36,7 +36,7 @@ basicstyle=\footnotesize
 
 \begin{figure}[htp]
 \begin{center}
-\includegraphics[width=8cm]{../../../matlab_/ub5/pics/aufgabe1.png}
+\includegraphics[width=8cm]{../../../matlab/ub5/pics/aufgabe1}
 \caption{Freiheitsgrade gegen $d\lambda$}
 \end{center}
 \end{figure}
@@ -44,7 +44,7 @@ basicstyle=\footnotesize
 \subsection{Code}
 
 \subsubsection{a1.m}
-\lstinputlisting{../../../matlab_/ub5/a1.m}
+\lstinputlisting{../../../matlab/ub5/a1.m}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Aufgabe 2
@@ -57,7 +57,7 @@ An jedem Index befinden sich drei Markierungen, die obere Grenze, Mittelwert der
 
 \begin{figure}[htp]
 \begin{center}
-\includegraphics[width=8cm]{../../../matlab_/ub5/pics/aufgabe2.png}
+\includegraphics[width=8cm]{../../../matlab/ub5/pics/aufgabe2}
 \caption{Mittelwert der Vorhersage und Varianz}
 \end{center}
 \end{figure}
@@ -65,7 +65,7 @@ An jedem Index befinden sich drei Markierungen, die obere Grenze, Mittelwert der
 \subsection{Code}
 
 \subsubsection{a2.m}
-\lstinputlisting{../../../matlab_/ub5/a2.m}
+\lstinputlisting{../../../matlab/ub5/a2.m}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -79,7 +79,7 @@ Der entstandene Vektor und der Basisvektor sind auf die maschinengenauigkeit gle
 \subsection{Code}
 
 \subsubsection{a2.m}
-\lstinputlisting{../../../matlab_/ub5/a3.m}
+\lstinputlisting{../../../matlab/ub5/a3.m}
 
 
 
