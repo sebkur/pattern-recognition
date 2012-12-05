@@ -1,0 +1,86 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[a4paper,vmargin={20mm,20mm},hmargin={30mm,25mm}]{geometry}
+
+\usepackage{graphicx}
+\usepackage[utf8x]{inputenc}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{verbatim}
+
+\begin{document}
+
+\lstset{
+basicstyle=\footnotesize
+}
+
+\parindent 0em%
+\parskip 0.5em%
+\noindent\rule{\textwidth}{1pt}%
+\begin{center}%
+\textbf{Mustererkennung WiSe 12/13} \\
+\textbf{Übung 4}
+\end{center}%
+{Lutz Freitag, Sebastian Kürten}\\%
+\noindent\rule{\textwidth}{1pt}%
+
+\definecolor{light-gray}{gray}{0.9}
+\lstset {numbers = left, language = octave}
+\lstset {basicstyle = \footnotesize, numberstyle = \small\color{gray}}
+\lstset {literate = {Ö}{{\"O}}1 {Ä}{{\"A}}1 {Ü}{{\"U}}1 {ß}{{\ss}}2 {ü}{{\"u}}1 {ä}{{\"a}}1 {ö}{{\"o}}1 }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Aufgabe 1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Aufgabe 1}
+
+
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=8cm]{../../../matlab/ub5/pics/aufgabe1}
+\caption{Freiheitsgrade gegen $d\lambda$}
+\end{center}
+\end{figure}
+
+\subsection{Code}
+
+\subsubsection{a1.m}
+\lstinputlisting{../../../matlab/ub5/a1.m}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Aufgabe 2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Aufgabe 2}
+
+Im Plot sind die Mittelwerte und die varianz gegen den Index aufgetragen.
+An jedem Index befinden sich drei Markierungen, die obere Grenze, Mittelwert der Vorhersage und die untere Grenze
+
+
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=8cm]{../../../matlab/ub5/pics/aufgabe2}
+\caption{Mittelwert der Vorhersage und Varianz}
+\end{center}
+\end{figure}
+
+\subsection{Code}
+
+\subsubsection{a2.m}
+\lstinputlisting{../../../matlab/ub5/a2.m}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Aufgabe 3
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Aufgabe 3}
+
+Der Vektor wurde wie in der Aufgabe gefordert berechnet und mit dem ersten Basisvektor der singular value decomposition matrix verglichen.
+Der entstandene Vektor und der Basisvektor sind auf die maschinengenauigkeit gleich.
+
+\subsection{Code}
+
+\subsubsection{a2.m}
+\lstinputlisting{../../../matlab/ub5/a3.m}
+
+
+
+\end{document}
