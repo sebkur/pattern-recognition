@@ -3,7 +3,7 @@ function bestW = perzeptron(X, y)
 	w = rand([1, len]) * 2 - 1;
 	w = w / norm (w);
 
-	maxIterations = size(X, 1);
+	maxIterations = log10(size(X, 1)) * 50;
 	% Zähler für Iterationen als zusätzliches Abbruchkriterium
 	iteration = 1;
 	% beste Lösung merken
