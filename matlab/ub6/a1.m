@@ -30,9 +30,12 @@ trainingPCA = [samplesTraining * v, labelsTraining];
 testingPCA = [samplesTesting * v, labelsTesting];
 
 % die unwichtigsten Hauptkomponenten wegwerfen
-trainingPCA = trainingPCA(7:end);
-testingPCA = testingPCA(7:end);
+trainingPCA = trainingPCA(:,7:end);
+testingPCA = testingPCA(:,7:end);
 
 % TODO: fisher aufrufen, mit
 % 1. trainingData und testingData
 % 2. trainingPCA und testingPCA
+
+dofisher(trainingData, testingData);
+dofisher(trainingPCA, testingPCA);
