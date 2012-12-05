@@ -18,3 +18,6 @@ prediction = (X * pw') >= 0;
 % Vorhersage bewerten
 nwrong = sum(prediction != y);
 relativeError = nwrong / N
+
+w / norm(w)
+pw / norm(pw)
