@@ -15,17 +15,20 @@ w = perzeptron(pixels, ys);
 I = double(imread('lena.png'));
 % nach schwarz-weiß konvertieren
 BW = I > mean(I(:));
-%BW = BW(1:24, 1:24);
-%BW = BW(1:240, 1:240);
 
+% Kantenbild berechnen
 O = [];
 [hei, wid] = size(BW);
+% alle Teilbilder ansehen
 for y = 2:hei-1
 	for x = 2:wid-1
-		% Teilmatrix holen
+		% Teilbildmatrix holen
 		M = BW(y-1:y+1,x-1:x+1);
+		% in Vektor umwandeln
 		Mpixels = reshape(M, 1, 9);
+		% klassifizieren
 		O(y-1, x-1) = Mpixels * w';
 	end
 end
+% Bild abspeichern
 imwrite(O, "edges.png");
