@@ -1,0 +1,108 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[a4paper,vmargin={20mm,20mm},hmargin={30mm,25mm}]{geometry}
+
+\usepackage{graphicx}
+\usepackage[utf8x]{inputenc}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{verbatim}
+
+\begin{document}
+
+\lstset{
+basicstyle=\footnotesize
+}
+
+\parindent 0em%
+\parskip 0.5em%
+\noindent\rule{\textwidth}{1pt}%
+\begin{center}%
+\textbf{Mustererkennung WiSe 12/13} \\
+\textbf{Übung 5}
+\end{center}%
+{Lutz Freitag, Sebastian Kürten}\\%
+\noindent\rule{\textwidth}{1pt}%
+
+\definecolor{light-gray}{gray}{0.9}
+\lstset {numbers = left, language = octave}
+\lstset {basicstyle = \footnotesize, numberstyle = \small\color{gray}}
+\lstset {literate = {Ö}{{\"O}}1 {Ä}{{\"A}}1 {Ü}{{\"U}}1 {ß}{{\ss}}2 {ü}{{\"u}}1 {ä}{{\"a}}1 {ö}{{\"o}}1 }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Aufgabe 1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Aufgabe 1: Ridge Regression}
+
+\subsection{Plot}
+
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=\textwidth]{images/pdfs/a1-crop}
+\caption{Darstellung der Features}
+\end{center}
+\end{figure}
+
+\subsection{Code}
+
+\subsubsection{a1.m}
+\lstinputlisting{../../../matlab/ub5/a1.m}
+
+\clearpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Aufgabe 2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Aufgabe 2: Bootstrap}
+
+Die Ausgabe sind Mittelwerte und Standardabweichung der ersten zehn Datensätze
+bezogen auf die 100 vorhergesagten Werte mit Hilfe linearer Regression auf Basis zufällig
+gewählter Trainingsgruppen der Größe 50.
+
+\subsection{Ausgabe}
+
+\verbatiminput{../../../matlab/ub5/output2}
+
+\subsection{Code}
+
+\subsubsection{a2.m}
+\lstinputlisting{../../../matlab/ub5/a2.m}
+
+\clearpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Aufgabe 3
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Aufgabe 3: Experiment}
+
+Wir haben hier mit der 8 gearbeitet. Die Beobachtung ist, dass die $x_k$ konvergieren,
+d.h. dass sich die Richtung der Vektoren nich mehr ändert.
+
+\subsection{Code}
+
+\subsubsection{a3.m}
+\lstinputlisting{../../../matlab/ub5/a3.m}
+
+\subsection{Plots}
+
+Siehe unten
+
+\begin{figure}[htp]
+\begin{center}$
+\begin{array}{cc}
+\includegraphics[width=0.33\textwidth]{images/pdfs/iteration0-crop}
+\includegraphics[width=0.33\textwidth]{images/pdfs/iteration1-crop}
+\includegraphics[width=0.33\textwidth]{images/pdfs/iteration2-crop} \\
+\includegraphics[width=0.33\textwidth]{images/pdfs/iteration3-crop}
+\includegraphics[width=0.33\textwidth]{images/pdfs/iteration4-crop}
+\includegraphics[width=0.33\textwidth]{images/pdfs/iteration5-crop} \\
+\includegraphics[width=0.33\textwidth]{images/pdfs/iteration6-crop}
+\includegraphics[width=0.33\textwidth]{images/pdfs/iteration7-crop} 
+\includegraphics[width=0.33\textwidth]{images/pdfs/iteration8-crop} \\
+\includegraphics[width=0.33\textwidth]{images/pdfs/iteration9-crop}
+\includegraphics[width=0.33\textwidth]{images/pdfs/iteration10-crop}
+\includegraphics[width=0.33\textwidth]{images/pdfs/iteration11-crop}
+\end{array}$
+\caption{Darstellung der ersten x Iterationen}
+\label{a1.1}
+\end{center}
+\end{figure}
+
+\end{document}
