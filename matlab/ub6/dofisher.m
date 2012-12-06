@@ -1,4 +1,4 @@
-function mat = dofisher(trainingData, testingData)
+function correct, wrong = dofisher(trainingData, testingData)
 	mus = {};
 	covariances = {};
 
@@ -20,6 +20,5 @@ function mat = dofisher(trainingData, testingData)
 	output_max_field_width(2);
 	n = 9;
 	[correct, wrong] = arrayfun(@(i,j) fisher(mus, covariances, testingData, i, j), \
-		repmat([0:n], n+1, 1), repmat([0:n], n+1, 1)')
-	correct ./ (correct + wrong)
+		repmat([0:n], n+1, 1), repmat([0:n], n+1, 1)');
 end

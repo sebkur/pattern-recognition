@@ -10,5 +10,5 @@ function [mu, cov] = gauss (samples)
 		cov += (sample - mu') * (sample' - mu);
 	end
 
-	cov = cov / size(samples)(1);
+	cov = cov / size(samples, 1);
 end;

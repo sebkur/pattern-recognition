@@ -7,18 +7,15 @@ move = [mean(trainingData(:,1:end-1)) 0];
 trainingData = trainingData - repmat(move, size(trainingData, 1), 1);
 testingData = testingData - repmat(move, size(testingData, 1), 1);
 
-%% select all samples labeled with 'digit'
-%digit = 3;
-%samples = trainingData(trainingData(:,17) == digit,:)(:,1:end - 1);
-
-samplesTraining = trainingData(:,1:end - 1);
+% features von den labels trennen
+featuresTraining = trainingData(:,1:end - 1);
 labelsTraining = trainingData(:, end);
 
-samplesTesting = testingData(:,1:end - 1);
+featuresTesting = testingData(:,1:end - 1);
 labelsTesting = testingData(:, end);
 
 % compute mu and covanriance matrix
-[mu, cov] = gauss(samplesTraining);
+[mu, cov] = gauss(featuresTraining);
 
 % eigenvektoren und eigenwerte berechnen
 % eigenvektoren stehen in den spalten
@@ -26,16 +23,29 @@ labelsTesting = testingData(:, end);
 [v, lambda] = eig(cov);
 
 % Daten auf die Eigenvektoren projizieren
-trainingPCA = [samplesTraining * v, labelsTraining];
-testingPCA = [samplesTesting * v, labelsTesting];
+trainingPCA = [featuresTraining * v, labelsTraining];
+testingPCA = [featuresTesting * v, labelsTesting];
 
-% die unwichtigsten Hauptkomponenten wegwerfen
-trainingPCA = trainingPCA(:,7:end);
-testingPCA = testingPCA(:,7:end);
+% für je zwei Ziffern paarweise linear trennen mit
+% Fisher's Diskriminante und die Anzahl der korrekt / falsch
+% klassifizierten Daten merken
+% --> hier mit den Originaldaten als Vergleichswert
+[correctNormal, wrongNormal] = dofisher(trainingData, testingData);
 
-% TODO: fisher aufrufen, mit
-% 1. trainingData und testingData
-% 2. trainingPCA und testingPCA
+% anzahl der zu entfernden Dimensionen
+for remove = 0:6
+	% die unwichtigsten Hauptkomponenten wegwerfen
+	trainingPCAn = trainingPCA(:,remove + 1:end);
+	testingPCAn = testingPCA(:,remove + 1:end);
 
-dofisher(trainingData, testingData);
-dofisher(trainingPCA, testingPCA);
+	% Nochmal paarweise Fisher.
+	% --> hier mit den dimensionsreduzierten Daten nach PCA
+	[correctPCA, wrongPCA] = dofisher(trainingPCAn, testingPCAn);
+
+	% Anzahl der entfernten Dimensionen ausgeben
+	remove
+	% Differenz der korrekt klassifizieren Daten ausrechnen,
+	% als Vergleich zur Klassifzierung auf den Originaldaten
+	correctPCA - correctNormal
+	total = sum((correctPCA - correctNormal)(:))
+end
