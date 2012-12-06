@@ -22,6 +22,8 @@ labelsTesting = testingData(:, end);
 % die wichtigste komponente steht ganz rechts
 [v, lambda] = eig(cov);
 
+
+
 % Daten auf die Eigenvektoren projizieren
 trainingPCA = [featuresTraining * v, labelsTraining];
 testingPCA = [featuresTesting * v, labelsTesting];
