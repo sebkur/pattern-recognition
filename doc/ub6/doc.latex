@@ -1,0 +1,157 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[a4paper,vmargin={20mm,20mm},hmargin={30mm,25mm}]{geometry}
+
+\usepackage{graphicx}
+\usepackage[utf8x]{inputenc}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{verbatim}
+%\usepackage{color}
+\usepackage[framed,numbered,autolinebreaks,useliterate]{mcode}
+
+\begin{document}
+
+\lstset{
+basicstyle=\footnotesize
+}
+
+\parindent 0em%
+\parskip 0.5em%
+\noindent\rule{\textwidth}{1pt}%
+\begin{center}%
+\textbf{Mustererkennung WiSe 12/13} \\
+\textbf{Übung 6}
+\end{center}%
+{Lutz Freitag, Sebastian Kürten}\\%
+\noindent\rule{\textwidth}{1pt}%
+
+\definecolor{light-gray}{gray}{0.9}
+\lstset {numbers = left, language = octave}
+\lstset {basicstyle = \footnotesize, numberstyle = \small\color{gray}}
+\lstset {literate = {Ö}{{\"O}}1 {Ä}{{\"A}}1 {Ü}{{\"U}}1 {ß}{{\ss}}2 {ü}{{\"u}}1 {ä}{{\"a}}1 {ö}{{\"o}}1 }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Aufgabe 1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Aufgabe 1: PCA}
+
+\subsection{Teil 1: PCA und Fisher}
+Wir machen die PCA einmal zu Beginn des Programms mit Hilfe der Trainingsdaten 
+und transformieren sowohl Trainings- als auch Testdaten in den neuen Raum.
+
+Dann trennen wir die Ziffern paarweise mit Hilfe von Fisher's Diskriminante und 
+schauen nach, wie viele Datensätze korrekt klassifiziert wurden im Vergleich zur
+paarweisen Klassifizierung, die auf den Originaldaten ausgeführt wird. Wir testen
+mit $0,1,...,6$ weggelassenen Dimensionen und stellen fest:
+\begin{itemize}
+\item beim Weglassen von 0 Dimensionen bleibt die Erkennungsrate gleich
+\item beim Weglassen von einer Dimension wird die Erkennungsrate insgesamt besser
+\item beim Weglassen von mehr Dimension wird die Erkennungsrate allmählich schlechter
+\end{itemize}
+
+Der Vergleich erfolgt durch Subtrahieren der Matrizen in der die Anzahl der paarweise
+korrekt klassifizierten Datensätze erfasst sind.
+
+\subsubsection{Code}
+
+\lstinputlisting{../../matlab/ub6/a1.m}
+
+\subsubsection{Ausgabe}
+
+\verbatiminput{../../matlab/ub6/output1}
+
+\subsection{Teil 2: PCA für die Ziffer 7 mit Darstellung}
+
+Hier haben wir die Hauptkomponenten für die Trainingsziffern mit Label 7 
+berechnet und diese grafisch dargestellt.
+
+\subsubsection{Code}
+
+\lstinputlisting{../../matlab/ub6/a1a.m}
+
+\subsubsection{Ausgabe}
+
+siehe Abbildung \ref{a2img}
+
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=\textwidth]{../../matlab/ub6/a1a}
+\caption{Darstellung der Hauptkomponenten für 7}
+\label{a2img}
+\end{center}
+\end{figure}
+
+\clearpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Aufgabe 2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Aufgabe 2: Perzeptron-Lernen}
+
+\subsection{Code}
+
+\subsubsection{a2.m}
+\lstinputlisting{../../matlab/ub6/a2.m}
+
+\subsubsection{perzeptron.m}
+\lstinputlisting{../../matlab/ub6/perzeptron.m}
+
+\subsection{Ausgabe}
+
+Wir sehen hier die Fehlerrate, sowie den zu Beginn generierten Vektor und
+den gelernten Vektor, beide normiert zum Vergleich.
+
+\verbatiminput{../../matlab/ub6/output2}
+
+\clearpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Aufgabe 3
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Aufgabe 3: Kantenerkennung}
+
+\subsection{Code}
+
+\subsubsection{a3.m}
+\lstinputlisting{../../matlab/ub6/a3.m}
+
+\subsubsection{binarypermutations.m}
+\lstinputlisting{../../matlab/ub6/binary_permutations.m}
+
+\subsubsection{label.m}
+\lstinputlisting{../../matlab/ub6/label.m}
+
+\subsection{Ausgabe}
+
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=6cm]{../../matlab/ub6/lena}
+\caption{Eingabebild}
+\end{center}
+\end{figure}
+
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=6cm]{../../matlab/ub6/edges}
+\caption{Kantenbild}
+\end{center}
+\end{figure}
+
+\clearpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Appendix
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\appendix
+\section{Alte Funktionen}
+
+\subsection{gauss.m}
+\lstinputlisting{../../matlab/ub6/gauss.m}
+
+\subsection{bayes.m}
+\lstinputlisting{../../matlab/ub6/bayes.m}
+
+\subsection{dofisher.m}
+\lstinputlisting{../../matlab/ub6/dofisher.m}
+
+\subsection{fisher.m}
+\lstinputlisting{../../matlab/ub6/fisher.m}
+
+\end{document}
