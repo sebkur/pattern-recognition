@@ -41,8 +41,8 @@ trainingPCAn = [trainingPCAn, labelsTraining];
 
 inputs = trainingPCAn;
 
-W1 = 1 * rand(15,15);
-W2 = 1 * rand(16,10);
+W1 = 1 * rand(15,35);
+W2 = 1 * rand(36,10);
 
 gamma = 0.05;
 subsetSize = 100
