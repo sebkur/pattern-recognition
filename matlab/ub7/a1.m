@@ -1,22 +1,16 @@
-
-function [s ds] = sigmoid(val)
-	s = 1 ./ (1 .+ e.^(-val * 2));
-	ds = s .* (1 .- s);
-end
-
 inputs  = [	[0, 0, 0]; ...
 			[0, 1, 1]; ...
 			[1, 0, 1]; ...
 			[1, 1, 0]]
 
-W1 = rand(3,2);
-W2 = rand(3,1);
+W1 = 2 * rand(3,2)
+W2 = 2 * rand(3,1)
 
-gamma = 0.1;
+gamma = 1;
 
 error = inf
 errorOverTime = [];
-while (error > 0.01)
+while (error > 0.0005)
 	error = 0;
 	correction1 = zeros(size(W1));
 	correction2 = zeros(size(W2));
@@ -58,11 +52,11 @@ W2
 for input = inputs'
 	% seperate the input from expected output
 	output = input(end)
-	input = augmentWithOnes(input(1:end - 1)')'
+	input = augmentWithOnes(input(1:end - 1)')';
 	o1 = sigmoid(input' * W1);
 	o2 = sigmoid(augmentWithOnes(o1) * W2)
 	
 end
 
-plot(errorOverTime);
+semilogy(errorOverTime);
 pause
