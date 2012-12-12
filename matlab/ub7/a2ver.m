@@ -3,7 +3,7 @@
 % load computed results
 load weights.mat W1 W2
 
-testingData = load("-ascii", "pendigits-testing.txt");
+testingData = load("-ascii", "pendigits-training.txt");
 
 % Mittelwert der Daten berechnden
 move = [mean(testingData(:,1:end-1)) 0];
@@ -65,3 +65,4 @@ end
 
 hits
 misses
+coverage = hits / (hits + misses)
