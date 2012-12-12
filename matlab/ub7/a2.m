@@ -46,11 +46,11 @@ W1 = 1 * rand(15,35);
 W2 = 1 * rand(36,10);
 
 gamma = 0.05;
-subsetSize = 150
+subsetSize = 100
 noise = 0.01
 
 error = inf
-while (max(error) > 0.1)
+while (max(error) > 0.5)
 	error = 0;
 	correction1 = zeros(size(W1));
 	correction2 = zeros(size(W2));
