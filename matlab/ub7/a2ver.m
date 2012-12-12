@@ -3,24 +3,28 @@
 % load computed results
 load weights.mat W1 W2
 
-testingData = load("-ascii", "pendigits-training.txt");
+testingData = load("-ascii", "pendigits-testing.txt");
+trainingData = load("-ascii", "pendigits-training.txt");
 
 % Mittelwert der Daten berechnden
-move = [mean(testingData(:,1:end-1)) 0];
+move = [mean(trainingData(:,1:end-1)) 0];
+
 % und Daten zum Ursprung verschieben
+trainingData = trainingData - repmat(move, size(trainingData, 1), 1);
 testingData = testingData - repmat(move, size(testingData, 1), 1);
 
 % features von den labels trennen
+featuresTraining = trainingData(:,1:end - 1);
 featuresTesting = testingData(:,1:end - 1);
 labelsTesting = testingData(:, end);
 
 % compute mu and covanriance matrix
-[mu, cov] = gauss(featuresTesting);
+[mu, cov] = gauss(featuresTraining);
 
 % eigenvektoren und eigenwerte berechnen
 % eigenvektoren stehen in den spalten
 % die wichtigste komponente steht ganz rechts
-[v, lambda] = eig(cov);
+[u,s,v] = svd(cov);
 
 % die labelmatrix zum Trainieren so aufbauen, dass an der entsprechenden Stelle eine 1 steht
 labels = [];
@@ -33,11 +37,12 @@ end
 labelsTesting = labels;
 
 % Daten auf die Eigenvektoren projizieren
-testingPCA = [featuresTesting * v, labelsTesting];
+testingPCA = featuresTesting * u;
 
 % die unwichtigsten Hauptkomponenten wegwerfen
-testingPCAn = testingPCA(:,end - 23:end);
+testingPCAn = testingPCA(:, 1:14);
 
+testingPCAn = [testingPCAn, labelsTesting];
 
 inputs = testingPCAn;
 

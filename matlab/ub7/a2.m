@@ -20,7 +20,7 @@ labelsTesting = testingData(:, end);
 % eigenvektoren und eigenwerte berechnen
 % eigenvektoren stehen in den spalten
 % die wichtigste komponente steht ganz rechts
-[v, lambda] = eig(cov);
+[u,s,v] = svd(cov);
 
 % die labelmatrix zum Trainieren so aufbauen, dass an der entsprechenden Stelle eine 1 steht
 labels = [];
@@ -32,25 +32,24 @@ end
 labelsTraining = labels;
 
 % Daten auf die Eigenvektoren projizieren
-trainingPCA = [featuresTraining * v, labelsTraining];
-testingPCA = [featuresTesting * v, labelsTesting];
+trainingPCA = featuresTraining * u;
 
 % die unwichtigsten Hauptkomponenten wegwerfen
-trainingPCAn = trainingPCA(:, end - 23:end);
-testingPCAn = testingPCA(:,end - 14:end);
+trainingPCAn = trainingPCA(:, 1:14);
 
+trainingPCAn = [trainingPCAn, labelsTraining];
 
 inputs = trainingPCAn;
 
-W1 = 1 * rand(15,35);
-W2 = 1 * rand(36,10);
+W1 = 1 * rand(15,15);
+W2 = 1 * rand(16,10);
 
 gamma = 0.05;
-subsetSize = 150
+subsetSize = 100
 noise = 0.00
 
 error = inf
-while (mean(error) > 0.2)
+while (error > 0.5)
 	error = 0;
 	correction1 = zeros(size(W1));
 	correction2 = zeros(size(W2));
@@ -74,7 +73,7 @@ while (mean(error) > 0.2)
 		o2 = sigmoid(augmentWithOnes(o1) * W2)';
 		
 		e = (o2 .- output);
-		error += 0.5 .* e.^2;
+		error += sum(0.5 .* e.^2);
 		
 		D1 = diag((o1 .* (1 .- o1)));
 		D2 = diag((o2 .* (1 .- o2)));
@@ -92,7 +91,7 @@ while (mean(error) > 0.2)
 	W1 += correction1;
 	W2 += correction2;
 	
-	mean(error)
+	error'
 end
 
 W1
