@@ -1,0 +1,88 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[a4paper,vmargin={20mm,20mm},hmargin={30mm,25mm}]{geometry}
+
+\usepackage{graphicx}
+\usepackage[utf8x]{inputenc}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{verbatim}
+%\usepackage{color}
+\usepackage[framed,numbered,autolinebreaks,useliterate]{mcode}
+
+\begin{document}
+
+\lstset{
+basicstyle=\footnotesize
+}
+
+\parindent 0em%
+\parskip 0.5em%
+\noindent\rule{\textwidth}{1pt}%
+\begin{center}%
+\textbf{Mustererkennung WiSe 12/13} \\
+\textbf{Übung 7}
+\end{center}%
+{Lutz Freitag, Sebastian Kürten}\\%
+\noindent\rule{\textwidth}{1pt}%
+
+\definecolor{light-gray}{gray}{0.9}
+\lstset {numbers = left, language = octave}
+\lstset {basicstyle = \footnotesize, numberstyle = \small\color{gray}}
+\lstset {literate = {Ö}{{\"O}}1 {Ä}{{\"A}}1 {Ü}{{\"U}}1 {ß}{{\ss}}2 {ü}{{\"u}}1 {ä}{{\"a}}1 {ö}{{\"o}}1 }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Aufgabe 1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Aufgabe 1: XOR}
+
+Wir haben ein neuronales Netz wie in der Vorlesung mit Matritzen implementiert, 
+nutzen dabei das online Lernverfahren und lassen es an den Testdaten lernen.
+
+Interessant ist, dass bei manchen initialen Gewichten das Lernen bei einem Fehler von 0.5 konvergiert. 
+Hier muss sich ein lokales Minimum befinden.
+
+In der grafischen Darstellung sieht man den Fehler gegen die Iterationen aufgetragen.
+
+Nach Ende des Lernens werden die Eingaben zur Verifikation in das Netz gegeben und es ergeben sich Fehler von wenigen Promill.
+
+\subsubsection{Code}
+
+\lstinputlisting{../../matlab/ub7/a1.m}
+
+\subsubsection{Ausgabe}
+
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=\textwidth]{../../matlab/ub7/a1}
+\caption{Fehler des neuronalen Netzes vs. Iteration}
+\label{a1img}
+\end{center}
+\end{figure}
+
+
+\clearpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Aufgabe 2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Aufgabe 2: Neuronale Netze auf Pendigits}
+
+Wir haben die wichtigsten Hauptkomponenten für die Aufgabe (siehe letzten Zettel) genutzt und damit das Netz trainiert.
+Dafür haben wir für jede Iteration für ein Gewichtsupdate ein Subset zufällig aus den Trainingsdaten gewählt und mit diesem gelernt.
+
+Als zweiten Teil wird das so eingelerne Netz auf den Testdaten angewand und überprüft, wie gut das Netz generalisieren kann.
+Dabei muss zwingend die gleiche PCA für die Testdaten genutzt werden, die auch für die Trainingsdaten genommen wurde (fieser Fallstrick).
+
+Wir haben in mehreren Versuchen die Anzahl der Knoten im hidden layer zwischen 13 und 60 variieren lassen, 
+wobei die Gewichte bei 35 am schnellsten konvergierten und die Erfolgsrate gut war.
+
+Die Erkennungsraten liegen dabei zwischen $90 \% $ und $95 \% $
+
+\subsubsection{Code - Generierung des neuronalen Netzes}
+
+\lstinputlisting{../../matlab/ub7/a2.m}
+
+\subsubsection{Code - Auswertung mit den Testdaten}
+\lstinputlisting{../../matlab/ub7/a2ver.m}
+
+
+\end{document}
