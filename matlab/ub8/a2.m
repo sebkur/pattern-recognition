@@ -1,29 +1,42 @@
-trainingData = load("-ascii", "pendigits-training.txt");
+penTrainingData = load("-ascii", "pendigits-training.txt");
+ionTrainingData = load("-ascii", "ionosphere.data");
 
-featuresTraining = trainingData(:,1:end - 1);
-labelsTraining = trainingData(:, end);
+
+penFeaturesTraining = penTrainingData(:,1:end - 1);
+penLabelsTraining = penTrainingData(:, end);
+
+ionFeaturesTraining = ionTrainingData(:,1:end - 1);
+ionLabelsTraining = ionTrainingData(:, end);
+
+[penTrainingPCA, penMove, penCov, penU] = normalize(penFeaturesTraining);
+[ionTrainingPCA, ionMove, ionCov, ionU] = normalize(ionFeaturesTraining);
 
 % die labelmatrix zum Trainieren so aufbauen, dass an der entsprechenden Stelle eine 1 steht
-labels = [];
-for label = labelsTraining'
+penLabels = [];
+for label = penLabelsTraining'
 	row = zeros(1,10);
 	row(label + 1) = 1;
-	labels = [labels; row];
+	penLabels = [penLabels; row];
 end
-labelsTraining = labels;
+penLabelsTraining = penLabels;
 
-[trainingPCA, move, cov, u] =normalize(featuresTraining)
 
 % die unwichtigsten Hauptkomponenten wegwerfen
-trainingPCAn = trainingPCA(:, 1:14);
+penTrainingPCAn = penTrainingPCA(:, 1:14);
 
-gamma = 0.05;
-subsetSize = 100
-noise = 0.00
+% die unwichtigsten Hauptkomponenten wegwerfen
+ionTrainingPCAn = ionTrainingPCA %(:, 1:14);
 
-[weights, errors] = online(trainingPCAn, labelsTraining, 35, 0.01, 0.05, 100)
 
-% save computed results
-save weights.mat W1 W2
+[ionDigitsWeightsOnline, ionDigitsErrorsOnline] = rprop(ionTrainingPCAn, ionLabelsTraining, 35, 0.5, 0.0001, 0.5, 1.2, 0.5, 100)
+save ionOnline.mat ionDigitsWeightsOnline ionDigitsErrorsOnline
 
+[ionDigitsWeightsBatch, ionDigitsErrorsBatch] = batch(ionTrainingPCAn, ionLabelsTraining, 35, 0.5, 0.05, 100)
+save ionBatch.mat ionDigitsWeightsBatch ionDigitsErrorsBatch
+
+[penDigitsWeightsOnline, penDigitsErrorsOnline] = online(penTrainingPCAn, penLabelsTraining, 35, 0.8, 0.05, 100)
+save penOnline.mat penDigitsWeightsOnline penDigitsErrorsOnline
+
+[penDigitsWeightsBatch, penDigitsErrorsBatch] = batch(penTrainingPCAn, penLabelsTraining, 35, 0.8, 0.05, 100)
+save penBatch.mat penDigitsWeightsBatch penDigitsErrorsBatch
 
