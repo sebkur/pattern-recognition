@@ -1,0 +1,82 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[a4paper,vmargin={20mm,20mm},hmargin={30mm,25mm}]{geometry}
+
+\usepackage{graphicx}
+\usepackage[utf8x]{inputenc}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{verbatim}
+%\usepackage{color}
+\usepackage[framed,numbered,autolinebreaks,useliterate]{mcode}
+
+\begin{document}
+
+\lstset{
+basicstyle=\footnotesize
+}
+
+\parindent 0em%
+\parskip 0.5em%
+\noindent\rule{\textwidth}{1pt}%
+\begin{center}%
+\textbf{Mustererkennung WiSe 12/13} \\
+\textbf{Übung 8}
+\end{center}%
+{Lutz Freitag, Sebastian Kürten}\\%
+\noindent\rule{\textwidth}{1pt}%
+
+\definecolor{light-gray}{gray}{0.9}
+\lstset {numbers = left, language = octave}
+\lstset {basicstyle = \footnotesize, numberstyle = \small\color{gray}}
+\lstset {literate = {Ö}{{\"O}}1 {Ä}{{\"A}}1 {Ü}{{\"U}}1 {ß}{{\ss}}2 {ü}{{\"u}}1 {ä}{{\"a}}1 {ö}{{\"o}}1 }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Aufgabe 1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Aufgabe 1: Online vs. Batch}
+
+\subsection{Code}
+
+\subsubsection{a1.m}
+Durchführung der Algorithmen und abspeichern der Resultate.
+\lstinputlisting{../../matlab/ub8/a1.m}
+
+\subsubsection{a1disp.m}
+Plotten der Resultate.
+\lstinputlisting{../../matlab/ub8/a1disp.m}
+
+\clearpage
+\subsection{Plots}
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=\textwidth]{../../matlab/ub8/a1}
+\caption{Iterationen vs. Fehler}
+\label{a1img}
+\end{center}
+\end{figure}
+
+\clearpage
+
+\subsection{Weiterer Code}
+
+\subsubsection{online.m}
+\lstinputlisting{../../matlab/ub8/online.m}
+
+\clearpage
+\subsubsection{batch.m}
+\lstinputlisting{../../matlab/ub8/batch.m}
+
+\clearpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Aufgabe 2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Aufgabe 2: RPROP}
+
+\subsection{Code}
+
+\lstinputlisting{../../matlab/ub8/a2.m}
+
+\clearpage
+\subsection{Plots}
+
+\end{document}
