@@ -27,7 +27,7 @@ penTrainingPCAn = penTrainingPCA(:, 1:14);
 % die unwichtigsten Hauptkomponenten wegwerfen
 ionTrainingPCAn = ionTrainingPCA %(:, 1:14);
 
-
+% arguments for online()/batch(): input, outputs, #hidden, maxError, gamma, subsetSize
 [ionDigitsWeightsOnline, ionDigitsErrorsOnline] = online(ionTrainingPCAn, ionLabelsTraining, 35, 0.5, 0.05, 100)
 save ionOnline.mat ionDigitsWeightsOnline ionDigitsErrorsOnline
 
