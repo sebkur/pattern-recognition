@@ -1,8 +1,8 @@
 function [weights, errors] = rprop(inputData, outputs, hiddenCnt, maxError, gammaMin, gammaMax, u, d, subsetSize)
 	inputWidth = size(inputData, 2)
 	outputWidth = size(outputs, 2)
-	W1 = rand(inputWidth + 1, hiddenCnt) .- 0.5;
-	W2 = rand(hiddenCnt + 1, outputWidth) .- 0.5;
+	W1 = (rand(inputWidth + 1, hiddenCnt) .- 0.5) .* 10;
+	W2 = (rand(hiddenCnt + 1, outputWidth) .- 0.5) .* 10;
 	
 	gammaMax1 = repmat(gammaMax, size(W1));
 	gammaMax2 = repmat(gammaMax, size(W2));
@@ -10,12 +10,12 @@ function [weights, errors] = rprop(inputData, outputs, hiddenCnt, maxError, gamm
 	gammaMin1 = repmat(gammaMin, size(W1));
 	gammaMin2 = repmat(gammaMin, size(W2));
 	
-	gamma1 = gammaMax1;
-	gamma2 = gammaMax2;
+	gamma1 = gammaMin1;
+	gamma2 = gammaMin2;
 	
 	errors = [];
 	
-	error = inf
+	error = 999
 	while (error > maxError)
 		error = 0;
 		
@@ -26,8 +26,11 @@ function [weights, errors] = rprop(inputData, outputs, hiddenCnt, maxError, gamm
 		
 		subset = [subsetInputs, subsetOutputs];
 		
-		last_correction1 = zeros(size(W1));
-		last_correction2 = zeros(size(W2));
+		last_correction11 = zeros(size(W1));
+		last_correction21 = zeros(size(W2));
+		
+		last_correction12 = zeros(size(W1));
+		last_correction22 = zeros(size(W2));
 		
 		for input = subset'
 			% seperate the input from expected output
@@ -39,7 +42,7 @@ function [weights, errors] = rprop(inputData, outputs, hiddenCnt, maxError, gamm
 			o2 = sigmoid(augmentWithOnes(o1) * W2)';
 			
 			err = (o2 .- output);
-			error += sum(0.5 .* err .^ 2);
+			error += (sum(0.5 .* err .^ 2) ./ subsetSize);
 			
 			D1 = diag((o1 .* (1 .- o1)));
 			D2 = diag((o2 .* (1 .- o2)));
@@ -52,19 +55,27 @@ function [weights, errors] = rprop(inputData, outputs, hiddenCnt, maxError, gamm
 			correction1 = (delta1 * input')';
 			correction2 = (delta2 * augmentWithOnes(o1))';
 			
-			gamma1 = 	(min(gamma1 * u, gammaMax1) .* (last_correction1 .* correction1 > 0)) .+ ...
-						(max(gamma1 * d, gammaMin1) .* (last_correction1 .* correction1 < 0)) .+ ...
-						(gamma1 .* (last_correction1 .* correction1 == 0));
+			gamma1 = 	(min(gamma1 * u, gammaMax1) .* ((last_correction11 .* last_correction12) < 0)) .+ ...
+						(max(gamma1 * d, gammaMin1) .* ((last_correction11 .* last_correction12) > 0)) .+ ...
+						(gamma1 .* ((last_correction11 .* last_correction12) == 0));
 						
-			gamma2 = 	(min(gamma2 * u, gammaMax2) .* (last_correction2 .* correction2 > 0)) .+ ...
-						(max(gamma2 * d, gammaMin2) .* (last_correction2 .* correction2 < 0)) .+ ...
-						(gamma2 .* (last_correction2 .* correction2 == 0));
+			gamma2 = 	(min(gamma2 * u, gammaMax2) .* ((last_correction21 .* last_correction22) < 0)) .+ ...
+						(max(gamma2 * d, gammaMin2) .* ((last_correction21 .* last_correction22) > 0)) .+ ...
+						(gamma2 .* ((last_correction21 .* last_correction22) == 0));
+						
+			gamma1';
+			gamma2';
+			
+			
+			
+			last_correction12 = last_correction11;
+			last_correction22 = last_correction21;
+			
+			last_correction11 = correction1;
+			last_correction21 = correction2;
 			
 			W1 -= gamma1 .* sign(correction1);
 			W2 -= gamma2 .* sign(correction2);
-			
-			last_correction1 = correction1;
-			last_correction2 = correction2;
 		end
 		
 		error'
@@ -74,18 +85,3 @@ function [weights, errors] = rprop(inputData, outputs, hiddenCnt, maxError, gamm
 	
 	weights = {W1, W2};
 end
-
-
-ionTrainingData = load("-ascii", "ionosphere.data");
-
-ionFeaturesTraining = ionTrainingData(:,1:end - 1);
-ionLabelsTraining = ionTrainingData(:, end);
-
-
-[ionTrainingPCA, ionMove, ionCov, ionU] = normalize(ionFeaturesTraining);
-
-
-% die unwichtigsten Hauptkomponenten wegwerfen
-ionTrainingPCAn = ionTrainingPCA %(:, 1:14);
-
-[ionDigitsWeightsOnline, ionDigitsErrorsOnline] = rprop(ionTrainingPCAn, ionLabelsTraining, 35, 0.5, 0.0001, 0.05, 1, 1, 100)

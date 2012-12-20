@@ -28,15 +28,7 @@ penTrainingPCAn = penTrainingPCA(:, 1:14);
 ionTrainingPCAn = ionTrainingPCA %(:, 1:14);
 
 
-[ionDigitsWeightsOnline, ionDigitsErrorsOnline] = rprop(ionTrainingPCAn, ionLabelsTraining, 35, 0.5, 0.0001, 0.5, 1.2, 0.5, 100)
-save ionOnline.mat ionDigitsWeightsOnline ionDigitsErrorsOnline
-
-[ionDigitsWeightsBatch, ionDigitsErrorsBatch] = batch(ionTrainingPCAn, ionLabelsTraining, 35, 0.5, 0.05, 100)
-save ionBatch.mat ionDigitsWeightsBatch ionDigitsErrorsBatch
-
-[penDigitsWeightsOnline, penDigitsErrorsOnline] = online(penTrainingPCAn, penLabelsTraining, 35, 0.8, 0.05, 100)
-save penOnline.mat penDigitsWeightsOnline penDigitsErrorsOnline
-
-[penDigitsWeightsBatch, penDigitsErrorsBatch] = batch(penTrainingPCAn, penLabelsTraining, 35, 0.8, 0.05, 100)
-save penBatch.mat penDigitsWeightsBatch penDigitsErrorsBatch
+[ionWeightsRPROP, ionErrorsRPROP] = rprop(ionTrainingPCAn, ionLabelsTraining, 35, 0.05, 0.0001, 0.5, 1.2, 0.5, 100)
+[penWeightsRPROP, penErrorsRPROP] = rprop(penTrainingPCAn, penLabelsTraining, 35, 0.505, 0.0001, 0.5, 1.2, 0.5, 100)
+save rprop.mat ionErrorsRPROP penErrorsRPROP
 
