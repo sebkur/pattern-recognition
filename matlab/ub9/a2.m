@@ -20,7 +20,7 @@ for i = 1:h % row index
 end
 
 % generate a number of linear classifiers as lines in polar coordinates
-L = 20; % number of classifiers to generate
+L = 32; % number of classifiers to generate
 lines = zeros(L, 2);
 diag = sqrt(h^2+w^2);
 maxR = diag/2;
@@ -36,6 +36,7 @@ weights = repmat(1/N, N, 1);
 
 results = [];
 
+tic
 M = 2; % number of classifiers to select
 for i = 1:M % for each classfier to select
 
@@ -49,20 +50,16 @@ for i = 1:M % for each classfier to select
 		r = line(1);
 		theta = line(2);
 
-		wc = 0;
-		we = 0;
-		for k = 1:N % iterate data
-			features = data(k,1:end-1);
-			label = data(k,end);
-
-			prediction = hessian_classify(theta, r, 1, 2, features);
-			w_k = weights(k);
-			if label == prediction
-				wc += w_k;
-			else
-				we += w_k;
-			end
-		end
+		features = data(:,1:end-1);
+		labels = data(:,end);
+		cfeatures = mat2cell(features, 
+			repmat(1,1,size(features,1)), size(features,2));
+		predictions = cellfun(@(x) hessian_classify(theta, r, 1, 2, x), 
+			cfeatures);
+		successIndices = find(predictions == labels);
+		failureIndices = find(predictions != labels);
+		wc = sum(weights(successIndices));
+		we = sum(weights(failureIndices));
 		if we < best_we
 			best = m;
 			best_we = we;
@@ -101,6 +98,7 @@ for i = 1:M % for each classfier to select
 
 	results = [results; alpha_m line];
 end
+toc
 
 % results contains alpha_m weights and parameters of the chosen lines
 results
