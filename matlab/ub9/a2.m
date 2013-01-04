@@ -37,7 +37,7 @@ weights = repmat(1/N, N, 1);
 results = [];
 
 tic
-M = 2; % number of classifiers to select
+M = 5; % number of classifiers to select
 for i = 1:M % for each classfier to select
 
 	% lecture's pseudocode: step 1)
@@ -52,10 +52,7 @@ for i = 1:M % for each classfier to select
 
 		features = data(:,1:end-1);
 		labels = data(:,end);
-		cfeatures = mat2cell(features, 
-			repmat(1,1,size(features,1)), size(features,2));
-		predictions = cellfun(@(x) hessian_classify(theta, r, 1, 2, x), 
-			cfeatures);
+		predictions = hessian_classify(theta, r, 1, 2, features);
 		successIndices = find(predictions == labels);
 		failureIndices = find(predictions != labels);
 		wc = sum(weights(successIndices));
@@ -82,6 +79,7 @@ for i = 1:M % for each classfier to select
 	r = line(1);
 	theta = line(2);
 
+	% TODO: use vectorized form of hessian_classify here
 	for k = 1:N % iterate data
 		features = data(k,1:end-1);
 		label = data(k,end);
