@@ -20,7 +20,7 @@ for i = 1:h % row index
 end
 
 % generate a number of linear classifiers as lines in polar coordinates
-L = 100; % number of classifiers to generate
+L = 500; % number of classifiers to generate
 lines = zeros(L, 2);
 diag = sqrt(h^2+w^2);
 maxR = diag/2;
@@ -29,6 +29,7 @@ for c = 1:L
 	theta = rand() * 2 * pi;
 	lines(c,:) = [r, theta];
 end
+linescopy = lines;
 
 % initialize weights
 N = size(data, 1);
@@ -37,14 +38,16 @@ weights = repmat(1/N, N, 1);
 results = [];
 
 tic
-M = 10; % number of classifiers to select
+M = 100; % number of classifiers to select
 for i = 1:M % for each classfier to select
 
 	% lecture's pseudocode: step 1)
 	% select Km which minimizes weighted error
 	best = 0;
 	best_we = inf;
-	best_wc = inf;
+	% best_dir == 1: use in this direction
+	% best_dir == 0: use in opposite direction
+	best_dir = 1;
 	for m = 1:size(lines, 1) % for each available classifier
 		line = lines(m,:);
 		r = line(1);
@@ -52,25 +55,32 @@ for i = 1:M % for each classfier to select
 
 		features = data(:,1:end-1);
 		labels = data(:,end);
-		predictions = hessian_classify(theta, r, 1, 2, features);
+		predictions = hessian_classify(theta, r, 2, 1, features);
 		successIndices = find(predictions == labels);
 		failureIndices = find(predictions != labels);
 		wc = sum(weights(successIndices));
 		we = sum(weights(failureIndices));
-		if we < best_we
+		% pick classifier direction according to wc/we
+		dir = we < wc;
+		uwe = min(we, wc);
+		if uwe < best_we
 			best = m;
-			best_we = we;
-			best_wc = wc;
+			best_we = uwe;
+			best_dir = dir;
 		end
+	end
+	if best == 0
+		% no classifier can be found
+ 		break;
 	end
 	m = best;
 	we = best_we;
-	wc = best_wc;
 
 	% lecture's pseudocode: step 2)
 	% set alpha_m
-	w = we + wc;
+	w = sum(weights);
 	em = we / w;
+	% NOTE: weight should be negative if !best_dir
 	alpha_m = 0.5*log((1-em)/em);
 
 	% lecture's pseudocode: step 3)
@@ -81,20 +91,29 @@ for i = 1:M % for each classfier to select
 
 	features = data(:,1:end-1);
 	labels = data(:,end);
-	predictions = hessian_classify(theta, r, 1, 2, features);
+	label1 = 2;
+	label2 = 1;
+	if (!best_dir)
+		label1 = 1;
+		label2 = 2;
+	end
+	predictions = hessian_classify(theta, r, label1, label2, features);
 	successIndices = find(predictions == labels);
 	failureIndices = find(predictions != labels);
-	weights(successIndices) = weights(successIndices) * sqrt((1-em) / em);
-	weights(failureIndices) = weights(failureIndices) * sqrt(em / (1-em));
+	weights(failureIndices) = weights(failureIndices) * sqrt((1-em) / em);
+	weights(successIndices) = weights(successIndices) * sqrt(em / (1-em));
 
 	line = lines(m, :);
 	lines = [lines(1:m-1,:); lines(m+1:end,:)];
 
 	results = [results; alpha_m line];
+
+	[i, alpha_m, line]
 end
 toc
 
 % results contains alpha_m weights and parameters of the chosen lines
 results
 
-% TODO: draw lines on image
+plotLines(I, linescopy(:,1), linescopy(:,2), repmat(1, size(linescopy, 1), 1), 'a2all.png');
+plotLines(I, results(:,2), results(:,3), results(:,1) * 10, 'a2result.png');
