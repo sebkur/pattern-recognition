@@ -20,7 +20,7 @@ for i = 1:h % row index
 end
 
 % generate a number of linear classifiers as lines in polar coordinates
-L = 32; % number of classifiers to generate
+L = 100; % number of classifiers to generate
 lines = zeros(L, 2);
 diag = sqrt(h^2+w^2);
 maxR = diag/2;
@@ -37,7 +37,7 @@ weights = repmat(1/N, N, 1);
 results = [];
 
 tic
-M = 5; % number of classifiers to select
+M = 10; % number of classifiers to select
 for i = 1:M % for each classfier to select
 
 	% lecture's pseudocode: step 1)
@@ -79,18 +79,14 @@ for i = 1:M % for each classfier to select
 	r = line(1);
 	theta = line(2);
 
-	% TODO: use vectorized form of hessian_classify here
-	for k = 1:N % iterate data
-		features = data(k,1:end-1);
-		label = data(k,end);
-		prediction = hessian_classify(theta, r, 1, 2, features);
-		w_k = weights(k);
-		if label == prediction
-			weights(k) = w_k * sqrt((1-em) / em);
-		else
-			weights(k) = w_k * sqrt(em / (1-em));
-		end
-	end
+	features = data(:,1:end-1);
+	labels = data(:,end);
+	predictions = hessian_classify(theta, r, 1, 2, features);
+	successIndices = find(predictions == labels);
+	failureIndices = find(predictions != labels);
+	weights(successIndices) = weights(successIndices) * sqrt((1-em) / em);
+	weights(failureIndices) = weights(failureIndices) * sqrt(em / (1-em));
+
 	line = lines(m, :);
 	lines = [lines(1:m-1,:); lines(m+1:end,:)];
 
@@ -102,5 +98,3 @@ toc
 results
 
 % TODO: draw lines on image
-% TODO: the whole thing is awfully slow, we have to use matrix operations
-% instead of loops to improve performance :/
