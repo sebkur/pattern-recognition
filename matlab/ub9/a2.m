@@ -80,8 +80,10 @@ for i = 1:M % for each classfier to select
 	% set alpha_m
 	w = sum(weights);
 	em = we / w;
-	% NOTE: weight should be negative if !best_dir
 	alpha_m = 0.5*log((1-em)/em);
+	if (!best_dir)
+		alpha_m = -alpha_m;
+	end
 
 	% lecture's pseudocode: step 3)
 	% update weights
@@ -108,12 +110,17 @@ for i = 1:M % for each classfier to select
 
 	results = [results; alpha_m line];
 
-	[i, alpha_m, line]
+	[i, alpha_m, line, best_dir]
 end
 toc
 
 % results contains alpha_m weights and parameters of the chosen lines
 results
 
-plotLines(I, linescopy(:,1), linescopy(:,2), repmat(1, size(linescopy, 1), 1), 'a2all.png');
-plotLines(I, results(:,2), results(:,3), results(:,1) * 10, 'a2result.png');
+[h, w] = size(I);
+A = repmat(200, size(I) * 3);
+A(h:h+h-1,w:w+w-1) = I;
+A = uint8(A);
+
+%plotLines(A, linescopy(:,1), linescopy(:,2), repmat(0.5, size(linescopy, 1), 1), 'a2all.png');
+plotLines(A, results(:,2), results(:,3), results(:,1) * 10, 'a2result.png');

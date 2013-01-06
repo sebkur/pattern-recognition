@@ -25,7 +25,11 @@ function plotLines(I, rs, thetas, widths, filename)
 		p = m - (ll / 2 / l) * v;
 		q = m + (ll / 2 / l) * v;
 		% zeichnen
-		plot([w/2 + p(1), w/2 + q(1)], [h/2 - p(2), h/2 - q(2)], '-', 'LineWidth', lw);
+		if lw > 0
+			plot([w/2 + p(1), w/2 + q(1)], [h/2 - p(2), h/2 - q(2)], '-b', 'LineWidth', lw);
+		else
+			plot([w/2 + p(1), w/2 + q(1)], [h/2 - p(2), h/2 - q(2)], '-r', 'LineWidth', -lw);
+		end
 	end;
 
 	print(filename);
