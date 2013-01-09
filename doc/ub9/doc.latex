@@ -1,0 +1,103 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[a4paper,vmargin={20mm,20mm},hmargin={30mm,25mm}]{geometry}
+
+\usepackage{graphicx}
+\usepackage[utf8x]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{verbatim}
+%\usepackage{color}
+\usepackage[framed,numbered,autolinebreaks,useliterate]{mcode}
+
+\begin{document}
+
+\lstset{
+basicstyle=\footnotesize
+}
+
+\parindent 0em%
+\parskip 0.5em%
+\noindent\rule{\textwidth}{1pt}%
+\begin{center}%
+\textbf{Mustererkennung WiSe 12/13} \\
+\textbf{Übung 8}
+\end{center}%
+{Lutz Freitag, Sebastian Kürten}\\%
+\noindent\rule{\textwidth}{1pt}%
+
+\definecolor{light-gray}{gray}{0.9}
+\lstset {numbers = left, language = octave}
+\lstset {basicstyle = \footnotesize, numberstyle = \small\color{gray}}
+\lstset {literate = {Ö}{{\"O}}1 {Ä}{{\"A}}1 {Ü}{{\"U}}1 {ß}{{\ss}}2 {ü}{{\"u}}1 {ä}{{\"a}}1 {ö}{{\"o}}1 }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Aufgabe 2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setcounter{section}{1}
+\section{Aufgabe 2: AdaBoost}
+
+\subsection{Code}
+
+\subsubsection{a2.m}
+
+\begin{itemize}
+\item Einlesen eines 64x64 Kreisbildes als Eingabe und konvertieren in Schwarz/Weiß
+\item Generieren von $L=500$ Klassifikatoren
+\item Selektieren von $M=100$ Klassifikatoren mit AdaBoost
+\item Der Algorithmus gliedert sich in drei Teilschritte wie in der Vorlesung gesehen bzw. im Buch von Prof. Rojas. beschrieben.
+\item Zeichnen der Eingabegeraden bzw. der von AdaBoost selektierten Geraden. Dabei Darstellung von Gewicht durch Linienbreite
+und Darstellung der ,,Richtung'' in der AdaBoost die Gerade verwendet, also wierum der Raum durch eine Gerade getrennt wird durch
+die Farbe. Die Darstellung erfolgt dabei in einem vergrößerten Bild (grauer Bereich) um die ausßerhalb des Eingabebildes liegenden
+Geraden darstellen zu können.
+\end{itemize}
+
+\lstinputlisting{../../matlab/ub9/a2.m}
+
+\subsubsection{hessian\_classify.m}
+Klassifizierer für lineare Trennung mit Geraden in hessischer Normalform.
+
+Die Funktion arbeit auf einer Featurematrix und klassifiziert also in einem Schritt mehrere Eingabevektoren.
+Zur Klassifizierung eines Vektors wird dieser auf den Normalenvektor der Geraden projiziert, und die
+Länge dieser Projektion bestimmt. Ist die Länge der Projektion kleiner als der Radius der Definition der entsprechenden
+Gerade in hessischer Normalform, dann liegt der Vektor auf der einen Seite der Geraden, sonst auf der anderen.
+Dementsprechend werden die Klassen zugeordnet.
+
+\lstinputlisting{../../matlab/ub9/hessian_classify.m}
+
+\subsubsection{plotLines.m}
+
+Plotten einer Liste von Geraden mit separat spezifizierten Linienbreiten auf ein gegebenes Bild.
+Die Linienbreite steht dabei für das von AdaBoost zugewiesene Gewicht des zugehörigen Klassifikators.
+Geraden, deren zugehöriger Klassifikator von AdaBoost mit negativem Gewicht ausgestattet wurden,
+werden Rot dargestellt, die mit positivem Gewicht Blau.
+
+\lstinputlisting{../../matlab/ub9/plotLines.m}
+
+\clearpage
+\subsection{Plots}
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.3\textwidth]{../../matlab/ub9/a2input64bw}
+\caption{Eingabebild}
+\label{a2img0}
+\end{center}
+\end{figure}
+
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=\textwidth]{../../matlab/ub9/a2all}
+\caption{Verwendete Klassifikatoren als Eingabe für AdaBoost}
+\label{a2img1}
+\end{center}
+\end{figure}
+
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=\textwidth]{../../matlab/ub9/a2result}
+\caption{von AdaBoost seleketierte Klassifikatoren}
+\label{a2img2}
+\end{center}
+\end{figure}
+
+\end{document}
