@@ -21,7 +21,7 @@ basicstyle=\footnotesize
 \noindent\rule{\textwidth}{1pt}%
 \begin{center}%
 \textbf{Mustererkennung WiSe 12/13} \\
-\textbf{Übung 8}
+\textbf{Übung 9}
 \end{center}%
 {Lutz Freitag, Sebastian Kürten}\\%
 \noindent\rule{\textwidth}{1pt}%
@@ -50,6 +50,7 @@ basicstyle=\footnotesize
 und Darstellung der ,,Richtung'' in der AdaBoost die Gerade verwendet, also wierum der Raum durch eine Gerade getrennt wird durch
 die Farbe. Die Darstellung erfolgt dabei in einem vergrößerten Bild (grauer Bereich) um die ausßerhalb des Eingabebildes liegenden
 Geraden darstellen zu können.
+\item Abspeichern der Klassifikatoren und Gewichte zur späteren Weiterverwendung.
 \end{itemize}
 
 \lstinputlisting{../../matlab/ub9/a2.m}
@@ -70,9 +71,16 @@ Dementsprechend werden die Klassen zugeordnet.
 Plotten einer Liste von Geraden mit separat spezifizierten Linienbreiten auf ein gegebenes Bild.
 Die Linienbreite steht dabei für das von AdaBoost zugewiesene Gewicht des zugehörigen Klassifikators.
 Geraden, deren zugehöriger Klassifikator von AdaBoost mit negativem Gewicht ausgestattet wurden,
-werden Rot dargestellt, die mit positivem Gewicht Blau.
+werden rot dargestellt, die mit positivem Gewicht blau.
 
 \lstinputlisting{../../matlab/ub9/plotLines.m}
+
+\subsubsection{a2test.m}
+
+Mit dem folgenden Code werden die Ergebnisse von AdaBoost (die ausgewählten Klassifikatoren mit ihren Gewichten) wieder eingelesen
+und die Eingabedaten werden klassifiziert. Es ergibt sich eine Erkennungsrate von 98.83\% mit der oben genannten Konfiguration.
+
+\lstinputlisting{../../matlab/ub9/a2test.m}
 
 \clearpage
 \subsection{Plots}
