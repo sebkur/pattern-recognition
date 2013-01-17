@@ -37,20 +37,33 @@ basicstyle=\footnotesize
 \setcounter{section}{0}
 \section{Aufgabe 1: NMF}
 
-\subsection{a1.m}
+Für die Implementierung siehe a13.m und nmf.m.
+Auf Abbildung \ref{a1img1} sind die Eingabedaten zu sehen.
+Abbildung \ref{a1img3} zeigt ein paar Eingabedaten und die zugehörigen Rekonstruktionen.
+
+\setcounter{section}{2}
+\section{Aufgabe 3: Matrix W}
+
+Für die Implementierung siehe auch hier a13.m und nmf.m (Insbesondere Zeilen 20 bis 27 
+in a13.m).
+Abbildung \ref{a1img2} stellt die Matrix W als Bilder dar.
+
+\section{Code}
+
+\subsection{a13.m}
 
 %\begin{itemize}
 %\item Abspeichern der Klassifikatoren und Gewichte zur späteren Weiterverwendung.
 %\end{itemize}
 
-\lstinputlisting{../../matlab/ub10/a1.m}
+\lstinputlisting{../../matlab/ub10/a13.m}
 
 \subsection{nmf.m}
 
 \lstinputlisting{../../matlab/ub10/nmf.m}
 
 \clearpage
-\subsection{Plots}
+\section{Plots}
 
 \begin{figure}[htp]
 \begin{center}
