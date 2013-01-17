@@ -1,0 +1,79 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[a4paper,vmargin={20mm,20mm},hmargin={30mm,25mm}]{geometry}
+
+\usepackage{graphicx}
+\usepackage[utf8x]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{verbatim}
+%\usepackage{color}
+\usepackage[framed,numbered,autolinebreaks,useliterate]{mcode}
+
+\begin{document}
+
+\lstset{
+basicstyle=\footnotesize
+}
+
+\parindent 0em%
+\parskip 0.5em%
+\noindent\rule{\textwidth}{1pt}%
+\begin{center}%
+\textbf{Mustererkennung WiSe 12/13} \\
+\textbf{Übung 10}
+\end{center}%
+{Lutz Freitag, Sebastian Kürten}\\%
+\noindent\rule{\textwidth}{1pt}%
+
+\definecolor{light-gray}{gray}{0.9}
+\lstset {numbers = left, language = octave}
+\lstset {basicstyle = \footnotesize, numberstyle = \small\color{gray}}
+\lstset {literate = {Ö}{{\"O}}1 {Ä}{{\"A}}1 {Ü}{{\"U}}1 {ß}{{\ss}}2 {ü}{{\"u}}1 {ä}{{\"a}}1 {ö}{{\"o}}1 }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Aufgabe 1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setcounter{section}{0}
+\section{Aufgabe 1: NMF}
+
+\subsection{a1.m}
+
+%\begin{itemize}
+%\item Abspeichern der Klassifikatoren und Gewichte zur späteren Weiterverwendung.
+%\end{itemize}
+
+\lstinputlisting{../../matlab/ub10/a1.m}
+
+\subsection{nmf.m}
+
+\lstinputlisting{../../matlab/ub10/nmf.m}
+
+\clearpage
+\subsection{Plots}
+
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=\textwidth]{../../matlab/ub10/image1}
+\caption{Darstellung der ersten 50 Ziffern der Trainingsdaten}
+\label{a1img1}
+\end{center}
+\end{figure}
+
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=\textwidth]{../../matlab/ub10/image2}
+\caption{Darstellung des Codebooks mit 50 Einträgen nach 100 Iterationen}
+\label{a1img2}
+\end{center}
+\end{figure}
+
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=\textwidth]{../../matlab/ub10/image3}
+\caption{Eingabebilder und Rekonstruktionen mittels Codebook (Rekonstruktion jeweils unter der Eingabe)}
+\label{a1img3}
+\end{center}
+\end{figure}
+
+\end{document}
