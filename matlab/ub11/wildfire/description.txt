@@ -1,0 +1,17 @@
+Folder structure:
++ jpg: images rescaled for viewing to 0..255
++ raw: raw 16bit pngs
+
+Description:
+Raw images are stored as uint16 pngs and are very dark. 
+This is because the CCD camera's full well capacity is about 14.000 DU,
+but the maximum pixel value for uint16 is 65535.
+
+The dataset contains 3 images taken from 2 different fire lookout towers in Cyprus.
+
+Images for viewing can be found in the jpg folder.
+In MATLAB you can use imshow(img,[]) to scale and display a raw image.
+
+Barbara Haupt, DLR
+barbara.haupt@dlr.de
+17.01.2013
