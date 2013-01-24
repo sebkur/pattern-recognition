@@ -1,0 +1,68 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[a4paper,vmargin={20mm,20mm},hmargin={30mm,25mm}]{geometry}
+
+\usepackage{graphicx}
+\usepackage[utf8x]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{verbatim}
+%\usepackage{color}
+\usepackage[framed,numbered,autolinebreaks,useliterate]{mcode}
+
+\begin{document}
+
+\lstset{
+basicstyle=\footnotesize
+}
+
+\parindent 0em%
+\parskip 0.5em%
+\noindent\rule{\textwidth}{1pt}%
+\begin{center}%
+\textbf{Mustererkennung WiSe 12/13} \\
+\textbf{Übung 11}
+\end{center}%
+{Lutz Freitag, Sebastian Kürten}\\%
+\noindent\rule{\textwidth}{1pt}%
+
+\definecolor{light-gray}{gray}{0.9}
+\lstset {numbers = left, language = octave}
+\lstset {basicstyle = \ttfamily\tiny, numberstyle = \small\color{gray}}
+\lstset {literate = {Ö}{{\"O}}1 {Ä}{{\"A}}1 {Ü}{{\"U}}1 {ß}{{\ss}}2 {ü}{{\"u}}1 {ä}{{\"a}}1 {ö}{{\"o}}1 }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Aufgabe 1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setcounter{section}{0}
+\section{Aufgabe 1: Raucherkennung}
+
+Der Rauch in den Bilder erscheint als gleichgerichtete Bewegung von Bildregionen. Ein guter Ansatz wäre also der optische Fluss im Bild, 
+bei dem der Klassifikator zusammengehörige Regionen erkennt und eine Region als Rauchkandidaten aussucht, deren Bewegungsrichtung nicht der 
+Hauptbewegungsrichtung im Bild entspricht.
+
+Um die Regionen in den Bildern zu finden, werden die Helligkeitsunterschiede untersucht. Durch Anwendung des morphologischen "Open" Operators 
+auf dem Differenzbild zwischen zwei aufeinanderfolgenden Bildern können zusammenhängende Regionen sichtbar gemacht werden, in denen sich etwas im Bild bewegt.
+Die Differenz der so entstehenden Bilder schränkt nocheinmal die Menge der Kandidaten ein. Die Methode funktioniert gut in Bildern, in denen sich wenig bewegt
+(kein Wind, keine Wolken), schlecht in Bildern, in denen die Rauchsäule verhältnismäßig klein ist oder generell viel Bewegung herscht.
+
+Wenn man noch die Information hätte, wohin sich die Region bewegt (optischer Fluss, Tracking), ließe sich ein Klassifikator nach einer einfachen Heuristik implementieren.
+
+\section{Code}
+
+\subsection{a1.m}
+
+\lstinputlisting{../../matlab/ub11/a1.m}
+
+\section{Plots}
+
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=\textwidth]{../../matlab/ub11/features}
+\caption{Ausgabe des Filters und der zugrundeliegenden Bilder}
+\label{a1img1}
+\end{center}
+\end{figure}
+
+
+\end{document}
