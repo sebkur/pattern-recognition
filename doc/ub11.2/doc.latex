@@ -1,0 +1,266 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[a4paper,vmargin={20mm,20mm},hmargin={30mm,25mm}]{geometry}
+
+\usepackage{graphicx}
+\usepackage[utf8x]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{verbatim}
+%\usepackage{color}
+\usepackage[framed,numbered,autolinebreaks,useliterate]{mcode}
+\usepackage{mathtools}
+\usepackage{tikz}
+
+\begin{document}
+
+\lstset{
+basicstyle=\footnotesize
+}
+
+\parindent 0em%
+\parskip 0.5em%
+\noindent\rule{\textwidth}{1pt}%
+\begin{center}%
+\textbf{Mustererkennung WiSe 12/13} \\
+\textbf{Übung 11}
+\end{center}%
+{Lutz Freitag, Sebastian Kürten}\\%
+\noindent\rule{\textwidth}{1pt}%
+
+\definecolor{light-gray}{gray}{0.9}
+\lstset {numbers = left, language = octave}
+\lstset {basicstyle = \footnotesize, numberstyle = \small\color{gray}}
+\lstset {literate = {Ö}{{\"O}}1 {Ä}{{\"A}}1 {Ü}{{\"U}}1 {ß}{{\ss}}2 {ü}{{\"u}}1 {ä}{{\"a}}1 {ö}{{\"o}}1 }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Aufgabe 1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setcounter{section}{1}
+\section{Aufgabe 2: ID3-Trees}
+
+Wir haben insgesamt 14 Datensätze. Der hervorzusagende Wert ist $\lbrace{yes, no}\rbrace$ für das Feld Play.
+Yes tritt 9 mal auf, No 5 Mal. Die Warscheinlichkeiten für Yes sei mit $p_1$ bezeichnet, 
+die für No mit $p_2$. Die Entropie berechnet sie dann wie folgt:
+$$ p_1=\frac{9}{14}, p_2=\frac{5}{14} $$
+$$ E = -p_1 * ln(p_1) - p_2 * ln(p_2) = 0,652$$
+
+Die Frage ist nun, nach welchem der beiden Kriterien Outlook oder Temperature auf der ersten
+Stufe des Baumes getrennt wird. Dazu betrachten wir für beide Möglichkeiten die durchnittliche 
+Entropie auf der jeweils nächsten Stufe.
+
+\subsection{Fall 1: Outlook}
+
+\begin{tabular}{|l|l|l|l|}\hline
+Outlook & Yes & No & Summe \\\hline\hline
+Sunny & 2 & 3 & 5 \\\hline
+Overcast & 4 & 0 & 4 \\\hline
+Rain & 3 & 2 & 5 \\\hline
+\end{tabular}
+
+$$ E_{Sunny} = -\frac{2}{5} * ln(\frac{2}{5}) - \frac{3}{5} * ln(\frac{3}{5}) = 0,673 $$
+$$ E_{Overcast} = -1 * ln(1) - 0 * ln(0) = 0 $$
+$$ E_{Rain} = -\frac{3}{5} * ln(\frac{3}{5}) - \frac{2}{5} * ln(\frac{2}{5}) = 0,673 $$
+
+Damit ergibt sich im Mittel:
+
+$$ E^1_{Outlook} = t_{Sunny} * E_{Sunny} + t_{Overcast} * E_{Overcast} + t_{Rain} * E_{Rain} $$
+
+wobei
+
+$$
+t_{Sunny} = \frac{5}{14},
+t_{Overcast} = \frac{4}{14},
+t_{Rain} = \frac{5}{14}
+$$
+
+also:
+
+$$ E^1_{Outlook} = 0,481 $$
+
+\subsection{Fall 2: Temperature}
+
+\begin{tabular}{|l|l|l|l|}\hline
+Temperature & Yes & No & Summe \\\hline\hline
+Hot & 2 & 2 & 4 \\\hline
+Mild & 4 & 2 & 6 \\\hline
+Cool & 3 & 1 & 4 \\\hline
+\end{tabular}
+
+$$ E_{Hot} = -\frac{1}{2} * ln(\frac{1}{2}) - \frac{1}{2} * ln(\frac{1}{2}) = 0,693 $$
+$$ E_{Mild} = -\frac{4}{6} * ln(\frac{4}{6}) - \frac{2}{6} * ln(\frac{2}{6}) = 0,637 $$
+$$ E_{Cool} = -\frac{3}{4} * ln(\frac{3}{4}) - \frac{1}{4} * ln(\frac{1}{4}) = 0,562 $$
+
+Damit ergibt sich im Mittel:
+
+$$ E^1_{Temperature} = t_{Hot} * E_{Hot} + t_{Mild} * E_{Mild} + t_{Cool} * E_{Cool} $$
+
+wobei
+
+$$
+t_{Hot} = \frac{4}{14},
+t_{Mild} = \frac{6}{14},
+t_{Cool} = \frac{4}{14}
+$$
+
+also:
+
+$$ E^1_{Temperature} = 0,632 $$
+
+\subsection{Auswahl der Trennkriteriums}
+
+Die mittlere Entropie für das Trennkriterium Outlook ist geringer als die des Kriteriums
+Temperature. Daher wird auf der ersten Stufe des Baums nach Outlook getrennt.
+
+\tikzstyle{level 1}=[level distance=2.0cm, sibling distance=3.5cm]
+\tikzstyle{level 2}=[level distance=3.5cm, sibling distance=3.5cm]
+\tikzstyle{top} = [text centered]
+\tikzstyle{circled1} = [text centered, draw, circle]
+\tikzstyle{circled2} = [text width = 2em, text centered, draw, circle]
+
+\begin{center}
+\begin{tikzpicture}
+
+    \node (root)[top] {Eingabe}
+	    child {
+		node[circled1] {Outlook}
+		child { 
+			node[circled2] {} 
+			edge from parent
+			node[above left] {Sunny}
+		}
+		child { 
+			node[circled2] {} 
+			edge from parent
+			node[above] {Overcast}
+		}
+		child { 
+			node[circled2] (rightmost) {} 
+			edge from parent
+			node[above right] {Rain}
+		}
+	}
+    ;
+
+\end{tikzpicture}
+\end{center}
+
+\subsection{Zweite Ebene}
+
+Für die zweite Ebene ergeben sich folgende Tabellen: siehe Abbildung \ref{zweiteEbene}.
+
+\begin{figure}[htp]
+ \begin{minipage}{.30\textwidth}
+	\begin{center}
+	\begin{tabular}{|l|l|}\hline
+	Temperature & Play \\\hline\hline
+	Hot & No \\\hline
+	Hot & No \\\hline
+	Mild & No \\\hline
+	Cool & Yes \\\hline
+	Mild & Yes \\\hline
+	\end{tabular}
+	\end{center}
+	\caption{Sunny}
+ \end{minipage}
+ \begin{minipage}{.30\textwidth}
+	\begin{center}
+	\begin{tabular}{|l|l|}\hline
+	Temperature & Play \\\hline\hline
+	Hot & Yes \\\hline
+	Cool & Yes \\\hline
+	Mild & Yes \\\hline
+	Hot & Yes \\\hline
+	\end{tabular}
+	\end{center}
+	\caption{Overcast}
+ \end{minipage}
+ \begin{minipage}{.30\textwidth}
+	\begin{center}
+	\begin{tabular}{|l|l|}\hline
+	Temperature & Play \\\hline\hline
+	Mild & Yes \\\hline
+	Cool & Yes \\\hline
+	Cool & No \\\hline
+	Mild & Yes \\\hline
+	Mild & No \\\hline
+	\end{tabular}
+	\end{center}
+	\caption{Rain}
+ \end{minipage}
+\caption{Daten auf der zweite Ebene}
+\label{zweiteEbene}
+\end{figure}
+
+Damit können wir dann den Entscheidungsbaum aufstellen: siehe Abbildung \ref{decisionTree}
+
+\tikzstyle{level 1}=[level distance=2.0cm, sibling distance=3.5cm]
+\tikzstyle{level 2}=[level distance=3.5cm, sibling distance=4.5cm]
+\tikzstyle{level 3}=[level distance=3.5cm, sibling distance=2.5cm]
+\tikzstyle{top} = [text centered]
+\tikzstyle{circled1} = [text centered, draw, circle]
+\tikzstyle{circled2} = [text centered, draw, circle]
+\tikzstyle{rect1} = [text centered, text width = 2cm, draw]
+
+\begin{figure}
+\begin{center}
+\begin{tikzpicture}
+
+    \node (root)[top] {Eingabe}
+	    child {
+		node[circled1] {Outlook}
+		child { 
+			node[circled2] {Temperature} 
+			child {
+				node[rect1] {No, $E=0$} 
+				edge from parent
+				node[above left] {Hot}
+			}
+			child {
+				node[rect1] {Yes: 50\%, No: 50\%, $E>0$} 
+				edge from parent
+				node[above] {Mild}
+			}
+			child {
+				node[rect1] {Yes, $E=0$} 
+				edge from parent
+				node[above right] {Cool}
+			}
+			edge from parent
+			node[above left] {Sunny}
+		}
+		child { 
+			node[rect1] {yes, $E=0$} 
+			edge from parent
+			node[above] {Overcast}
+		}
+		child { 
+			node[circled2] (rightmost) {Temperature} 
+			child {
+				node[rect1] {Yes: 60\%, No: 40\%, $E>0$} 
+				edge from parent
+				node[above left] {Hot}
+			}
+			child {
+				node[rect1] {Yes: 67\%, No: 33\%, $E>0$} 
+				edge from parent
+				node[above] {Mild}
+			}
+			child {
+				node[rect1] {Yes: 50\%, No: 50\%, $E>0$} 
+				edge from parent
+				node[above right] {Cool}
+			}
+			edge from parent
+			node[above right] {Rain}
+		}
+	}
+    ;
+
+\end{tikzpicture}
+\end{center}
+\caption{fertiger Entscheidungsbaum}
+\label{decisionTree}
+\end{figure}
+
+\end{document}
